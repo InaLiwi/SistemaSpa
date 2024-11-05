@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from .models import Libro
-from .forms import LibroForm
+from .models import SPA
+from .forms import SPAForm
 
 # Create your views here.
 
