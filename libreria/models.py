@@ -1,8 +1,8 @@
 from django.db import models
 
 # Create your models here.
-
-class Libro(models.Model):
+"""
+class SPA(models.Model):
     libro_id = models.AutoField(primary_key=True)
     libro_nombre = models.CharField(max_length=100, verbose_name='Nombre Libro')
     libro_imagen = models.ImageField(upload_to='imagenes/', verbose_name='Imagen Portada', null=True, blank=True)
@@ -22,7 +22,7 @@ class Libro(models.Model):
     def delete(self, using=None, keep_parents=False):
         self.libro_imagen.storage.delete(self.libro_imagen.name)
         super().delete()
-        
+   """     
     
     
     
