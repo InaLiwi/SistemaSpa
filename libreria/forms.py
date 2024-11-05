@@ -1,8 +1,8 @@
 from django import forms
-from .models import Libro
+from .models import SPA
 
 class LibroForm(forms.ModelForm):
     class Meta:
-        model = Libro
+        model = SPA
         fields = '__all__'
         
