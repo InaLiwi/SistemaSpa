@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from .models import SPA
-from .forms import SPAForm
+#from .models import SPA
+#from .forms import SPAForm
 
 # Create your views here.
 '''
@@ -21,7 +21,11 @@ def inicio(request):
 def servicios(request):
     return render(request, 'paginas/servicios.html')
 
-def libros(request):
+
+def 
+
+
+'''def libros(request):
     libros = Libro.objects.all()
     return render(request, 'libros/index.html', {'libros': libros})
 
@@ -33,6 +37,4 @@ def crear(request):
     return render(request, 'libros/crear.html', {'formulario':formulario})
 
 def editar(request):
-    return render(request, 'libros/editar.html')
-
-
+    return render(request, 'libros/editar.html')'''

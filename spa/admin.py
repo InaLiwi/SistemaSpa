@@ -1,5 +1,6 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import SPA
-admin.site.register(SPA)
+
+#from .models import *
+#admin.site.register(SPA)
