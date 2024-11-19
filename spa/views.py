@@ -21,11 +21,8 @@ def inicio(request):
 def servicios(request):
     return render(request, 'paginas/servicios.html')
 
-
-def 
-
-
-'''def libros(request):
+'''
+def libros(request):
     libros = Libro.objects.all()
     return render(request, 'libros/index.html', {'libros': libros})
 
