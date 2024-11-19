@@ -4,6 +4,16 @@ from .models import SPA
 from .forms import SPAForm
 
 # Create your views here.
+'''
+PÁGINAS QUE SE VERÁN:
+- Inicio
+- Reservaciones
+- Servicios que tenemos (y sus promociones)
+- Promociones
+- Perfil
+- Galería
+- Contacto
+'''
 
 def inicio(request):
     return render(request, 'paginas/inicio.html')

@@ -4,10 +4,33 @@
 
 {% block contenido %} 
 
-Sección de Servicios 
+<section class="reservaciones">
+    <h1>Haz tu Reservación</h1>
+    <form action="#" method="POST">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required>
+
+        <label for="email">Correo Electrónico:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="fecha">Fecha de Reserva:</label>
+        <input type="date" id="fecha" name="fecha" required>
+
+        <label for="servicio">Selecciona un Servicio:</label>
+        <select id="servicio" name="servicio">
+            <option value="masaje">Masaje Relajante</option>
+            <option value="facial">Facial Hidratante</option>
+            <option value="manos">Manicura y Pedicura</option>
+        </select>
+
+        <button type="submit">Reservar</button>
+    </form>
+</section>
+
+<!--Sección de Servicios 
 
 AGREGUEMOS QUE PUEDAN VER 
 - LAS PROMOCIONES 
-- Y LAS RESERVACIONES
+- Y LAS RESERVACIONES -->
 
 {% endblock %}

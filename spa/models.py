@@ -24,5 +24,12 @@ class SPA(models.Model):
         super().delete()
    """     
     
-    
+class Reserva(models.Model):
+    pass
+
+class Usuario(models.Model):
+    pass
+
+class Promocion(models.Model):
+    pass
     
