@@ -49,17 +49,21 @@ def d_reserva(request):
 # Promos #
 
 def promos(request):
-    return render(request, 'paginas/promos.html')
+    return render(request, 'promociones/index.html')
 
 def c_promos(request):
-    return render(request, 'paginas/c_promos.html')
+    return render(request, 'promociones/crear.html')
 
 def u_promos(request):
-    return render(request, 'paginas/u_promos.html')
+    return render(request, 'promociones/editar.html')
 
 def d_promos(request):
-    return render(request, 'paginas/d_promos.html')
+    return render(request, 'promociones/d_promos.html')
 
+
+
+def galeria(request):
+    return render(request, 'paginas/galeria.html')
 '''
 def libros(request):
     libros = Libro.objects.all()

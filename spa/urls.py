@@ -36,5 +36,7 @@ urlpatterns = [
     path('u_promos', views.u_promos, name='u_promos'),
     path('d_promos', views.d_promos, name='d_promos'),
 
+    path('galeria', views.galeria, name='galeria'),
+
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
