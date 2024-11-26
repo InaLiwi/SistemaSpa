@@ -68,16 +68,22 @@ class Promocion(models.Model):
         return fila
 
 
+class Usuario(models.Model):
+    usuario_nombreUsuario = models.CharField(primary_key=True, unique=True, verbose_name='Ingrese un nombre de usuario único: ')
+    usuario_password = models.CharField(max_length=20, min_length=8, verbose_name='Ingrese una contraseña: ')
+    usuario_tipo = models.CharField(verbose_name='Tipo de usuario: administrador, trabajador, cliente')
+
+    def __str__(self):
+        fila = "Usuario: " + self.usuario_nombreUsuario + " || "  + "Tipo de usuario: " + self.usuario_tipo
+        return fila
+
+
+
+
 class Reserva(models.Model):
     reserva_id = models.AutoField(primary_key=True)
     reserva_servicios = models.ForeignKey(Servicio, on_delete=models.CASCADE, related_name='reservaServicios')
     reserva_promos = models.ForeignKey(Promocion, on_delete=models.CASCADE, related_name='reservaPromos')
     reserva_precioTotal = models.IntegerField()
-    reserva_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, related_name='cliente')
+#    reserva_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, related_name='cliente')
 
-class Usuario(models.Model):
-    pass
-
-class Promocion(models.Model):
-    pass
-    
