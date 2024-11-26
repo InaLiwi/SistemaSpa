@@ -4,6 +4,48 @@
 
 {% block contenido %} 
 
+{% for promocion in promociones %}
+<div class="row offset-md">
+
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+
+        <div class="card border-0" id="tarjetas">
+
+            <div class="card-body">
+              <img src="" class="card-img-top" style="width:100px;" alt="...">
+              <h5 class="card-title"> ID Reserva: {{ promocion.promocion_id }} </h5>
+              <h5 class="card-title">Precio: ${{ promocion.promocion_precio }}</h5>
+              <h6 class="card-title">Descripción: ${{ promocion.promocion_descripcion }}</h6>
+  
+              <details>
+                  <summary>Servicios implicados</summary>
+                  <p> {{ promocion.promocion_servicios }} </p>
+              </details>
+  
+            <a href="productos.html#Saga3-2" class="btn  border-0"><i class="fa-solid fa-cart-shopping" aria-hidden="true"></i> $5.990</a>
+            <br> <a href="productos.html#Saga3-all" class="btn  border-0 end" "="">Ver toda la saga</a>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{% endfor %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="card mt-5">
     <div class="card-header"><a name="" id="" class="btn btn-success" href="{% url 'c_promos' %}" role="button">Nueva Promoción</a>
     </div>
