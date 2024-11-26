@@ -35,7 +35,7 @@ def d_servicios(request):
 # Resrvas #
 
 def reservas(request):
-    return render(request, 'paginas/reservas.html')
+    return render(request, 'reservas/index.html')
 
 def c_reserva(request):
     return render(request, 'paginas/c_reserva.html')

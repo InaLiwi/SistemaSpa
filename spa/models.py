@@ -42,7 +42,7 @@ class BloqueHora(models.Model):
 
 class Servicio(models.Model):
     servicio_id = models.AutoField(primary_key=True)
-    servicio_precio = models.IntegerField(max_length=6, verbose_name='Precio del servicio: ')
+    servicio_precio = models.IntegerField( verbose_name='Precio del servicio: ')
     servicio_descripcion = models.CharField(max_length=200, verbose_name='Descripción: ')
     servicio_bh = models.ForeignKey(BloqueHora, on_delete=models.CASCADE, related_name='servicios')
     servicio_imagenes = models.ImageField(upload_to='imagenes/', verbose_name='Imagen Portada', null=True, blank=True)
@@ -58,7 +58,7 @@ class Servicio(models.Model):
 
 class Promocion(models.Model):
     promocion_id = models.AutoField(primary_key=True)
-    promocion_precio = models.IntegerField(max_length=6, verbose_name='Precio del servicio: ')
+    promocion_precio = models.IntegerField(verbose_name='Precio del servicio: ')
     promocion_descripcion = models.CharField(max_length=200, verbose_name='Descripción: ')
     promocion_servicios = models.ForeignKey(Servicio, on_delete=models.CASCADE, related_name='promos')
     #promocion_servicios = models.arreglo(verbose_name= 'Fecha y Hora del servicio: ')
@@ -68,6 +68,40 @@ class Promocion(models.Model):
         return fila
 
 
+class Usuario(models.Model):
+    usuario_nombreUsuario = models.CharField(max_length=50, primary_key=True, unique=True, verbose_name='Ingrese un nombre de usuario único: ')
+    usuario_password = models.CharField(max_length=20, verbose_name='Ingrese una contraseña: ')
+    usuario_tipo = models.CharField(max_length=15, verbose_name='Tipo de usuario: administrador, trabajador, cliente')
+
+    def __str__(self):
+        fila = "Usuario: " + self.usuario_nombreUsuario + " || "  + "Tipo de usuario: " + self.usuario_tipo
+        return fila
+
+    def crearReserva(Reserva):
+        pass
+
+    def verReservas():
+        pass
+
+    def modificarReserva():
+        pass
+
+    def eliminarReserva():
+        pass
+
+
+class Cliente(Usuario):
+    cliente_nombreCliente = models.CharField(max_length=50, verbose_name='Nombre y Apellido: ')
+    cliente_direccion = models.CharField(max_length=200, verbose_name='Dirección: ')
+    cliente_telefono = models.IntegerField(verbose_name='Número de teléfono: ')
+
+    def __str__(self):
+        fila = "Usuario: " + self.usuario_nombreUsuario + " || "  + "Nombre: " + self.cliente_nombreCliente + " || "  + "Dirección: " + self.cliente_direccion + " || "  + "Nombre: " + str(self.cliente_telefono)
+        return fila
+
+
+
+
 class Reserva(models.Model):
     reserva_id = models.AutoField(primary_key=True)
     reserva_servicios = models.ForeignKey(Servicio, on_delete=models.CASCADE, related_name='reservaServicios')
@@ -75,9 +109,6 @@ class Reserva(models.Model):
     reserva_precioTotal = models.IntegerField()
     reserva_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, related_name='cliente')
 
-class Usuario(models.Model):
-    pass
-
-class Promocion(models.Model):
-    pass
-    
+    def __str__(self):
+        fila = "Reserva: " + str(self.reserva_id) + " || "  + "Cliente: " + self.reserva_cliente  + " || "  + "Precio total: " + str(self.reserva_precioTotal)
+        return fila
