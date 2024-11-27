@@ -1,9 +1,9 @@
 from django.http import HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
-#from .models import SPA
-#from .forms import SPAForm
+from .models import *
+from .forms import *
 
 # Create your views here.
 '''
@@ -20,50 +20,96 @@ PÁGINAS QUE SE VERÁN:
 def inicio(request):
     return render(request, 'paginas/inicio.html')
 
-# Servicios #
 
+# ----- SERVICIOS ------
 def servicios(request):
-    return render(request, 'paginas/servicios.html')
+    servicios = Servicio.objects.all()
+    return render(request, 'paginas/servicios.html', {'servicios': servicios})
 
 def c_servicios(request):
-    return render(request, 'paginas/c_servicios.html')
+    formulario = ServicioForm(request.POST or None, request.FILES or None)
+    if formulario.is_valid():
+        formulario.save()
+        return redirect('servicios')
+    return render(request, 'paginas/c_servicios.html', {'formulario':formulario})
 
-def u_servicios(request):
-    return render(request, 'paginas/u_servicios.html')
+def u_servicios(request, servicio_id):
+    servicio = get_object_or_404(Servicio, servicio_id=servicio_id)
+    if request.method == 'POST':
+        formulario = ServicioForm(request.POST, request.FILES, instance=servicio)
+        if formulario.is_valid():
+            formulario.save()  
+            return redirect('servicios')  
+    else:
+        formulario = ServicioForm(instance=servicio)  
+    return render(request, 'paginas/u_servicios.html', {'formulario': formulario})
 
-def d_servicios(request):
+def d_servicios(request, servicio_id):
+    servicio = Servicio.objects.get(servicio_id = servicio_id)
+    servicio.delete()
     return render(request, 'paginas/d_servicios.html')
 
-# Resrvas #
 
+# ----- RESERVAS ------
 def reservas(request):
-    return render(request, 'reservas/index.html')
+    reservas = Reserva.objects.all()
+    return render(request, 'reservas/index.html', {'reservas': reservas})
 
 def c_reserva(request):
-    return render(request, 'paginas/c_reserva.html')
+    formulario = ReservaForm(request.POST or None, request.FILES or None)
+    if formulario.is_valid():
+        formulario.save()
+        return redirect('reservas')
+    return render(request, 'reservas/crear.html', {'formulario':formulario})
 
-def u_reserva(request):
-    return render(request, 'paginas/u_reserva.html')
+def u_reserva(request, reserva_id):
+    reserva = get_object_or_404(Reserva, reserva_id=reserva_id)
+    if request.method == 'POST':
+        formulario = ReservaForm(request.POST, request.FILES, instance=reserva)
+        if formulario.is_valid():
+            formulario.save()  
+            return redirect('reservas')  
+    else:
+        formulario = ReservaForm(instance=reserva)  
+    return render(request, 'reservas/editar.html', {'formulario': formulario})
 
-def d_reserva(request):
-    return render(request, 'paginas/d_reserva.html')
+def d_reserva(request, reserva_id):
+    reserva = Reserva.objects.get(reserva_id = reserva_id)
+    reserva.delete()
+    return redirect('reservas')
 
-# Promos #
 
+# ----- PROMOCIONES ------
 def promos(request):
-    return render(request, 'promos/index.html')
+    promos = Promocion.objects.all()
+    return render(request, 'promociones/index.html', {'promos': promos})
 
 def c_promos(request):
-    return render(request, 'promociones/crear.html')
+    formulario = PromocionForm(request.POST or None, request.FILES or None)
+    if formulario.is_valid():
+        formulario.save()
+        return redirect('promos')
+    return render(request, 'promociones/crear.html', {'formulario':formulario})
 
-def u_promos(request):
-    return render(request, 'promociones/editar.html')
+def u_promos(request, promocion_id):
+    promocion = get_object_or_404(Promocion, promocion_id=promocion_id)
+    if request.method == 'POST':
+        formulario = PromocionForm(request.POST, request.FILES, instance=promocion)
+        if formulario.is_valid():
+            formulario.save()  
+            return redirect('promos')  
+    else:
+        formulario =PromocionForm(instance=promocion)  
+    return render(request, 'promociones/editar.html', {'formulario': formulario})
 
-def d_promos(request):
-    return render(request, 'promociones/d_promos.html')
+def d_promos(request, promocion_id):
+    promocion = Promocion.objects.get(promocion_id = promocion_id)
+    promocion.delete()
+    return redirect('promos')
 
 
 
+# ----- OTROS ------
 def galeria(request):
     return render(request, 'paginas/galeria.html')
 

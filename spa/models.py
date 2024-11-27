@@ -35,8 +35,8 @@ class BloqueHora(models.Model):
     bh_hora_fin = models.TimeField()     # Hora de fin del bloque
 
     def __str__(self):
-        return f"{self.bh_dia} - {self.bh_hora_inicio} a {self.bh_hora_fin}"
-
+        fila =  f"{self.bh_dia}, de {self.bh_hora_inicio} a {self.bh_hora_fin} hrs."
+        return fila
 
 
 
@@ -77,17 +77,9 @@ class Usuario(models.Model):
         fila = "Usuario: " + self.usuario_nombreUsuario + " || "  + "Tipo de usuario: " + self.usuario_tipo
         return fila
 
-    def crearReserva(Reserva):
-        pass
-
-    def verReservas():
-        pass
-
     def modificarReserva():
         pass
 
-    def eliminarReserva():
-        pass
 
 
 class Cliente(Usuario):
