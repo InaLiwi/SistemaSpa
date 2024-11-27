@@ -48,5 +48,8 @@ urlpatterns = [
 # Login
     path('login', views.login, name='login'),
 
+# Registro
+    path('registro/', views.registro, name='registro'),
+
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

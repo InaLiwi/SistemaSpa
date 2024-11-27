@@ -17,7 +17,7 @@
             <div class="card shadow">
                 <div class="card-body p-5">
                     <h2 class="card-title text-center mb-4">Iniciar Sesión</h2>
-                    <form action="{% url 'login' %}" method="post">
+                    <form method="post">
                         {% csrf_token %}
                         <div class="mb-3">
                             <label for="username" class="form-label">Nombre de usuario</label>
@@ -28,7 +28,7 @@
                             <input type="password" class="form-control" id="password" name="password" required>
                         </div>
                         <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="remember-me" name="remember-me">
+                            <input type="checkbox" class="form-check-input" id="remember-me" name="remember">
                             <label class="form-check-label" for="remember-me">Recordarme</label>
                         </div>
                         <div class="d-grid">

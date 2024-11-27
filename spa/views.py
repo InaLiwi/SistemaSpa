@@ -1,5 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login, authenticate
 #from .models import SPA
 #from .forms import SPAForm
 
@@ -49,7 +51,7 @@ def d_reserva(request):
 # Promos #
 
 def promos(request):
-    return render(request, 'promociones/index.html')
+    return render(request, 'promos/index.html')
 
 def c_promos(request):
     return render(request, 'promociones/crear.html')
@@ -70,6 +72,21 @@ def contacto(request):
 
 def login(request):
     return render(request, 'paginas/login.html')
+
+def registro(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('inicio') 
+    else:
+        form = UserCreationForm()
+    return render(request, 'registration/registro.html', {'form': form})
+
 
 
 '''
