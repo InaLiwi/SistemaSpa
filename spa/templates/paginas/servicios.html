@@ -1,153 +1,115 @@
 {% extends "base.html" %}
+{% load static %}
 
-{% block titulo %} Servicios {% endblock %}
+{% block titulo %}Servicios - Spa Relax{% endblock %}
 
-{% block contenido %} 
-<style>
-    body {
-        font-family: 'Arial', sans-serif;
-    }
-    .navbar {
-        margin-bottom: 30px;
-    }
-    .servicio {
-        border: 1px solid #ddd;
-        border-radius: 10px;
-        padding: 20px;
-        margin-bottom: 20px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease;
-    }
-    .servicio:hover {
-        transform: translateY(-5px);
-    }
-    .servicio h3 {
-        color: #007bff;
-    }
-    .servicio p {
-        font-size: 14px;
-    }
-    .servicio .fecha-disponible {
-        font-weight: bold;
-        color: #28a745;
-    }
-    .servicio .fecha-no-disponible {
-        font-weight: bold;
-        color: #dc3545;
-    }
-    .btn-primary {
-        background-color: #007bff;
-        border: none;
-    }
-    .btn-primary:hover {
-        background-color: #0056b3;
-    }
-    .form-control {
-        border-radius: 5px;
-    }
-    #fecha {
-        border-radius: 5px;
-    }
-    footer {
-        background-color: #343a40;
-        color: #fff;
-    }
-    footer p {
-        margin: 0;
-    }
-</style>
+{% block contenido %}
+<section class="services-hero text-white text-center py-5 mb-5">
+    <div class="container">
+        <h1 class="display-4">Nuestros Servicios</h1>
+        <p class="lead">Descubre una experiencia de relajación única</p>
+    </div>
+</section>
 
 <section class="container my-5">
-    <h1 class="text-center mb-5">Servicios que Ofrecemos</h1>
-
-    <!-- Filtro de Disponibilidad y Fecha -->
     <div class="row mb-4">
         <div class="col-md-4">
-            <label for="fecha">Selecciona una fecha:</label>
-            <input type="text" id="fecha" class="form-control" placeholder="Seleccionar fecha">
+            <div class="form-group">
+                <label for="fecha" class="form-label">Selecciona una fecha:</label>
+                <input type="text" id="fecha" class="form-control" placeholder="Seleccionar fecha">
+            </div>
         </div>
         <div class="col-md-4">
-            <label for="disponibilidad">Disponibilidad:</label>
-            <select class="form-control" id="disponibilidad">
-                <option value="">Seleccione...</option>
-                <option value="disponible">Disponible</option>
-                <option value="no_disponible">No Disponible</option>
-            </select>
+            <div class="form-group">
+                <label for="disponibilidad" class="form-label">Disponibilidad:</label>
+                <select class="form-select" id="disponibilidad">
+                    <option value="">Todos</option>
+                    <option value="disponible">Disponible</option>
+                    <option value="no_disponible">No Disponible</option>
+                </select>
+            </div>
         </div>
-        <div class="col-md-4">
-            <button class="btn btn-primary mt-4" id="aplicar-filtros">
-                <i class="fas fa-filter"></i> Aplicar Filtros
+        <div class="col-md-4 d-flex align-items-end">
+            <button class="btn btn-primary w-100" id="aplicar-filtros">
+                <i class="fas fa-filter me-2"></i> Aplicar Filtros
             </button>
         </div>
     </div>
 
-    <!-- Servicios Filtrados -->
-    <div id="servicios-lista">
-        <div class="row">
-            <!-- Ejemplo de un servicio -->
-            <div class="col-md-4 servicio" data-disponibilidad="disponible" data-fecha="2024-12-01">
-                <h3>Masaje Relajante</h3>
-                <p>Un masaje de cuerpo entero para aliviar el estrés y la tensión.</p>
-                <p><strong>Precio:</strong> $50 USD</p>
-                <p><strong>Fecha Disponible:</strong> 01 de diciembre, 2024</p>
-                <p><strong>Disponibilidad:</strong> <span class="fecha-disponible">Disponible</span></p>
+    <div id="servicios-lista" class="row g-4">
+        <div class="col-md-4 servicio" data-disponibilidad="disponible" data-fecha="2024-12-01">
+            <div class="card h-100 shadow-sm">
+                <img src="{% static 'img/masaje-relajante.jpg' %}" class="card-img-top" alt="Masaje Relajante">
+                <div class="card-body">
+                    <h3 class="card-title">Masaje Relajante</h3>
+                    <p class="card-text">Un masaje de cuerpo entero para aliviar el estrés y la tensión.</p>
+                    <p class="card-text"><strong>Precio:</strong> $50 USD</p>
+                    <p class="card-text"><strong>Fecha Disponible:</strong> 01 de diciembre, 2024</p>
+                    <p class="card-text"><strong>Disponibilidad:</strong> <span class="badge badge-success">Disponible</span></p>
+                </div>
+                <div class="card-footer bg-transparent border-top-0">
+                    <a href="#" class="btn btn-outline-primary w-100">Reservar</a>
+                </div>
             </div>
-            <div class="col-md-4 servicio" data-disponibilidad="no_disponible" data-fecha="2024-12-02">
-                <h3>Facial Hidratante</h3>
-                <p>Tratamiento facial para una piel suave e hidratada.</p>
-                <p><strong>Precio:</strong> $40 USD</p>
-                <p><strong>Fecha Disponible:</strong> 02 de diciembre, 2024</p>
-                <p><strong>Disponibilidad:</strong> <span class="fecha-no-disponible">No Disponible</span></p>
+        </div>
+        <div class="col-md-4 servicio" data-disponibilidad="no_disponible" data-fecha="2024-12-02">
+            <div class="card h-100 shadow-sm">
+                <img src="{% static 'img/facial-hidratante.jpg' %}" class="card-img-top" alt="Facial Hidratante">
+                <div class="card-body">
+                    <h3 class="card-title">Facial Hidratante</h3>
+                    <p class="card-text">Tratamiento facial para una piel suave e hidratada.</p>
+                    <p class="card-text"><strong>Precio:</strong> $40 USD</p>
+                    <p class="card-text"><strong>Fecha Disponible:</strong> 02 de diciembre, 2024</p>
+                    <p class="card-text"><strong>Disponibilidad:</strong> <span class="badge badge-danger">No Disponible</span></p>
+                </div>
+                <div class="card-footer bg-transparent border-top-0">
+                    <a href="#" class="btn btn-outline-secondary w-100" disabled>No Disponible</a>
+                </div>
             </div>
-            <div class="col-md-4 servicio" data-disponibilidad="disponible" data-fecha="2024-12-03">
-                <h3>Manicura y Pedicura</h3>
-                <p>Relájate mientras cuidas de tus manos y pies.</p>
-                <p><strong>Precio:</strong> $30 USD</p>
-                <p><strong>Fecha Disponible:</strong> 03 de diciembre, 2024</p>
-                <p><strong>Disponibilidad:</strong> <span class="fecha-disponible">Disponible</span></p>
+        </div>
+        <div class="col-md-4 servicio" data-disponibilidad="disponible" data-fecha="2024-12-03">
+            <div class="card h-100 shadow-sm">
+                <img src="{% static 'img/manicura-pedicura.jpg' %}" class="card-img-top" alt="Manicura y Pedicura">
+                <div class="card-body">
+                    <h3 class="card-title">Manicura y Pedicura</h3>
+                    <p class="card-text">Relájate mientras cuidas de tus manos y pies.</p>
+                    <p class="card-text"><strong>Precio:</strong> $30 USD</p>
+                    <p class="card-text"><strong>Fecha Disponible:</strong> 03 de diciembre, 2024</p>
+                    <p class="card-text"><strong>Disponibilidad:</strong> <span class="badge badge-success">Disponible</span></p>
+                </div>
+                <div class="card-footer bg-transparent border-top-0">
+                    <a href="#" class="btn btn-outline-primary w-100">Reservar</a>
+                </div>
             </div>
         </div>
     </div>
-
 </section>
 
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
 <script>
-    // Inicializar el Datepicker de jQuery UI
     $(document).ready(function() {
         $("#fecha").datepicker({
             dateFormat: "yy-mm-dd"
         });
 
-        // Función para aplicar los filtros
         $('#aplicar-filtros').on('click', function() {
             var fechaSeleccionada = $('#fecha').val();
             var disponibilidadSeleccionada = $('#disponibilidad').val();
 
-            // Filtrar servicios
             $('.servicio').each(function() {
                 var servicioFecha = $(this).data('fecha');
                 var servicioDisponibilidad = $(this).data('disponibilidad');
 
-                // Filtrar por fecha y disponibilidad
                 if ((fechaSeleccionada === '' || servicioFecha === fechaSeleccionada) && 
                     (disponibilidadSeleccionada === '' || servicioDisponibilidad === disponibilidadSeleccionada)) {
-                    $(this).show();  // Mostrar servicio si cumple con los filtros
+                    $(this).show();
                 } else {
-                    $(this).hide();  // Ocultar servicio si no cumple con los filtros
+                    $(this).hide();
                 }
             });
         });
     });
 </script>
-
-<!--Sección de Servicios 
-
-AGREGUEMOS QUE PUEDAN VER 
-- LAS PROMOCIONES 
-- Y LAS RESERVACIONES -->
-
 {% endblock %}
+

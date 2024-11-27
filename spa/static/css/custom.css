@@ -1,0 +1,84 @@
+:root {
+    --color-primary: #7FDBDA;
+    --color-secondary: #B8E0D2;
+    --color-accent: #95D9C3;
+    --color-background: #F0F7F4;
+    --color-text: #2C3E50;
+    --color-light: #FFFFFF;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--color-background);
+    color: var(--color-text);
+}
+
+.navbar {
+    background-color: var(--color-primary);
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: var(--color-light);
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: var(--color-secondary);
+}
+
+.btn-primary {
+    background-color: var(--color-accent);
+    border-color: var(--color-accent);
+}
+
+.btn-primary:hover {
+    background-color: var(--color-secondary);
+    border-color: var(--color-secondary);
+}
+
+.card {
+    background-color: var(--color-light);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.services-hero {
+    background: linear-gradient(rgba(127, 219, 218, 0.7), rgba(184, 224, 210, 0.7)), url('../img/spa-hero.jpg');
+    background-size: cover;
+    background-position: center;
+    padding: 100px 0;
+}
+
+footer {
+    background-color: var(--color-primary);
+    color: var(--color-light);
+}
+
+@media (max-width: 768px) {
+    .services-hero {
+        padding: 60px 0;
+    }
+}
+
+.badge-success {
+    background-color: var(--color-accent);
+    color: var(--color-light);
+}
+
+.badge-danger {
+    background-color: #E57373;
+    color: var(--color-light);
+}
+
+.form-control, .form-select {
+    border-color: var(--color-secondary);
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 0.2rem rgba(149, 217, 195, 0.25);
+}
+
