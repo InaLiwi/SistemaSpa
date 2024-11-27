@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block contenido %}
-<section class="hero bg-primary text-white text-center py-5">
+<section class="hero text-white text-center py-5">
     <div class="container">
         <h1 class="display-4">Bienvenido a Spa Relax</h1>
         <p class="lead">Tu oasis de tranquilidad y bienestar</p>
@@ -15,38 +15,29 @@
         <h2 class="text-center mb-5">Nuestros Servicios Destacados</h2>
         <div class="row">
             <div class="col-md-4 mb-4">
-                <div class="card h-100 shadow-sm">
-                    <img src="{% static 'img/masaje-relajante.jpg' %}" class="card-img-top" alt="Masaje Relajante">
+                <div class="card h-100">
+                    <img src="{% static 'img/masaje.jpg' %}" class="card-img-top" alt="Masaje">
                     <div class="card-body">
                         <h5 class="card-title">Masajes Relajantes</h5>
                         <p class="card-text">Disfruta de nuestros masajes terapéuticos para aliviar el estrés y la tensión.</p>
                     </div>
-                    <div class="card-footer bg-transparent border-top-0">
-                        <a href="{% url 'servicios' %}" class="btn btn-outline-primary w-100">Ver Más</a>
-                    </div>
                 </div>
             </div>
             <div class="col-md-4 mb-4">
-                <div class="card h-100 shadow-sm">
-                    <img src="{% static 'img/facial-hidratante.jpg' %}" class="card-img-top" alt="Tratamiento Facial">
+                <div class="card h-100">
+                    <img src="{% static 'img/facial.jpg' %}" class="card-img-top" alt="Tratamiento Facial">
                     <div class="card-body">
                         <h5 class="card-title">Tratamientos Faciales</h5>
                         <p class="card-text">Rejuvenece tu piel con nuestros tratamientos faciales personalizados.</p>
                     </div>
-                    <div class="card-footer bg-transparent border-top-0">
-                        <a href="{% url 'servicios' %}" class="btn btn-outline-primary w-100">Ver Más</a>
-                    </div>
                 </div>
             </div>
             <div class="col-md-4 mb-4">
-                <div class="card h-100 shadow-sm">
-                    <img src="{% static 'img/manicura-pedicura.jpg' %}" class="card-img-top" alt="Manicura y Pedicura">
+                <div class="card h-100">
+                    <img src="{% static 'img/sauna.jpg' %}" class="card-img-top" alt="Sauna">
                     <div class="card-body">
-                        <h5 class="card-title">Manicura y Pedicura</h5>
-                        <p class="card-text">Relájate y embellece tus manos y pies con nuestros tratamientos especializados.</p>
-                    </div>
-                    <div class="card-footer bg-transparent border-top-0">
-                        <a href="{% url 'servicios' %}" class="btn btn-outline-primary w-100">Ver Más</a>
+                        <h5 class="card-title">Sauna y Baños de Vapor</h5>
+                        <p class="card-text">Relájate y desintoxica tu cuerpo en nuestras instalaciones de primera clase.</p>
                     </div>
                 </div>
             </div>
@@ -59,38 +50,6 @@
         <h2 class="mb-3">¿Listo para relajarte?</h2>
         <p class="lead mb-4">Reserva tu experiencia de spa hoy y disfruta de un 10% de descuento en tu primera visita.</p>
         <a href="{% url 'reservas' %}" class="btn btn-primary btn-lg">Reserva Ahora</a>
-    </div>
-</section>
-
-<section class="testimonials py-5 bg-light">
-    <div class="container">
-        <h2 class="text-center mb-5">Lo que dicen nuestros clientes</h2>
-        <div class="row">
-            <div class="col-md-4 mb-4">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-body">
-                        <p class="card-text">"Una experiencia increíble. El masaje fue justo lo que necesitaba para relajarme después de una semana estresante."</p>
-                        <p class="font-weight-bold mb-0">- María G.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-body">
-                        <p class="card-text">"El tratamiento facial dejó mi piel radiante. ¡Definitivamente volveré!"</p>
-                        <p class="font-weight-bold mb-0">- Carlos R.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-body">
-                        <p class="card-text">"El ambiente es tan relajante y el personal es muy profesional. Una experiencia de spa de primera clase."</p>
-                        <p class="font-weight-bold mb-0">- Laura M.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </section>
 {% endblock %}

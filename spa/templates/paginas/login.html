@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}Iniciar Sesión - Spa Relax{% endblock %}
+
+{% block contenido %}
+<section class="hero text-white text-center py-5 mb-5">
+    <div class="container">
+        <h1 class="display-4">Iniciar Sesión</h1>
+        <p class="lead">Accede a tu cuenta para gestionar tus reservas y preferencias</p>
+    </div>
+</section>
+
+<section class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-body p-5">
+                    <h2 class="card-title text-center mb-4">Iniciar Sesión</h2>
+                    <form action="{% url 'login' %}" method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Nombre de usuario</label>
+                            <input type="text" class="form-control" id="username" name="username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="remember-me" name="remember-me">
+                            <label class="form-check-label" for="remember-me">Recordarme</label>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                        </div>
+                    </form>
+                    <div class="mt-3 text-center">
+                        <a href="{% url 'password_reset' %}" class="text-decoration-none">¿Olvidaste tu contraseña?</a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4 text-center">
+                <p>¿No tienes una cuenta? <a href="{% url 'registro' %}" class="text-decoration-none">Regístrate aquí</a></p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

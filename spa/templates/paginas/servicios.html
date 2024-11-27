@@ -90,7 +90,13 @@
 <script>
     $(document).ready(function() {
         $("#fecha").datepicker({
-            dateFormat: "yy-mm-dd"
+            dateFormat: "yy-mm-dd",
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "c-10:c+10",
+            firstDay: 1,
+            dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
+            monthNames: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
         });
 
         $('#aplicar-filtros').on('click', function() {

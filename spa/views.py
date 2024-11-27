@@ -64,6 +64,14 @@ def d_promos(request):
 
 def galeria(request):
     return render(request, 'paginas/galeria.html')
+
+def contacto(request):
+    return render(request, 'paginas/contacto.html')
+
+def login(request):
+    return render(request, 'paginas/login.html')
+
+
 '''
 def libros(request):
     libros = Libro.objects.all()

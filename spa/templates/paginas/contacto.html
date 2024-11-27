@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}Contacto - Spa Relax{% endblock %}
+
+{% block contenido %}
+<section class="hero text-white text-center py-5 mb-5">
+    <div class="container">
+        <h1 class="display-4">Contáctanos</h1>
+        <p class="lead">Estamos aquí para responder tus preguntas y ayudarte a reservar tu experiencia de spa perfecta</p>
+    </div>
+</section>
+
+<section class="container my-5">
+    <div class="row">
+        <div class="col-lg-6 mb-4">
+            <h2 class="mb-4">Envíanos un mensaje</h2>
+            <form action="#" method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="telefono" class="form-label">Teléfono</label>
+                    <input type="tel" class="form-control" id="telefono" name="telefono">
+                </div>
+                <div class="mb-3">
+                    <label for="mensaje" class="form-label">Mensaje</label>
+                    <textarea class="form-control" id="mensaje" name="mensaje" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
+            </form>
+        </div>
+        <div class="col-lg-6">
+            <h2 class="mb-4">Información de Contacto</h2>
+            <div class="card bg-light">
+                <div class="card-body">
+                    <h3 class="h5 mb-3">Spa Relax</h3>
+                    <p><i class="fas fa-map-marker-alt me-2"></i> Av. Camilo Henríquez 785, Curicó, Región del Maule, Chile</p>
+                    <p><i class="fas fa-phone me-2"></i> +56 9 1234 5678</p>
+                    <p><i class="fas fa-envelope me-2"></i> info@sparelax.cl</p>
+                    <p><i class="fas fa-clock me-2"></i> Lunes a Domingo: 10:00 AM - 8:00 PM</p>
+                </div>
+            </div>
+            <div class="mt-4">
+                <h3 class="h5 mb-3">Síguenos en redes sociales</h3>
+                <a href="#" class="btn btn-outline-primary me-2 mb-2"><i class="fab fa-facebook-f"></i> Facebook</a>
+                <a href="#" class="btn btn-outline-primary me-2 mb-2"><i class="fab fa-instagram"></i> Instagram</a>
+                <a href="#" class="btn btn-outline-primary mb-2"><i class="fab fa-twitter"></i> Twitter</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="bg-light py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Ubicación</h2>
+        <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d53483.80367504696!2d-71.27546233996726!3d-34.98246942120447!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662c62385f48f3d%3A0x9f2d45e8b1f9c5d4!2zQ3VyaWPDsywgTWF1bGU!5e0!3m2!1ses!2scl!4v1653337896273!5m2!1ses!2scl" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

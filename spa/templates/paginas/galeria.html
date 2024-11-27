@@ -1,85 +1,65 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+{% load static %}
 
-{% block titulo %} Galeria {% endblock %}
+{% block titulo %}Galería - Spa Relax{% endblock %}
 
-{% block contenido %} 
+{% block contenido %}
+<section class="hero text-white text-center py-5 mb-5">
+    <div class="container">
+        <h1 class="display-4">Nuestra Galería</h1>
+        <p class="lead">Explora nuestras instalaciones y servicios de primera clase</p>
+    </div>
+</section>
 
 <section class="container my-5">
-    <h1 class="text-center mb-5">Galería</h1>
-    <div class="row">
-        <!-- Imagen 1 -->
-        <div class="col-md-4 mb-4">
-            <a href="https://via.placeholder.com/800x600" data-lightbox="galeria" data-title="Masaje Relajante">
-                <img src="https://via.placeholder.com/800x600" class="img-fluid" alt="Masaje Relajante">
+    <div class="row g-4" id="gallery">
+        <div class="col-md-4 col-sm-6">
+            <a href="{% static 'img/spa-1.jpg' %}" class="gallery-item" data-lightbox="gallery" data-title="Sala de masajes">
+                <img src="{% static 'img/spa-1.jpg' %}" alt="Sala de masajes" class="img-fluid rounded">
+                <div class="gallery-caption">Sala de masajes</div>
             </a>
         </div>
-        <!-- Imagen 2 -->
-        <div class="col-md-4 mb-4">
-            <a href="https://via.placeholder.com/800x600" data-lightbox="galeria" data-title="Facial Hidratante">
-                <img src="https://via.placeholder.com/800x600" class="img-fluid" alt="Facial Hidratante">
+        <div class="col-md-4 col-sm-6">
+            <a href="{% static 'img/spa-2.jpg' %}" class="gallery-item" data-lightbox="gallery" data-title="Piscina de relajación">
+                <img src="{% static 'img/spa-2.jpg' %}" alt="Piscina de relajación" class="img-fluid rounded">
+                <div class="gallery-caption">Piscina de relajación</div>
             </a>
         </div>
-        <!-- Imagen 3 -->
-        <div class="col-md-4 mb-4">
-            <a href="https://via.placeholder.com/800x600" data-lightbox="galeria" data-title="Manicura y Pedicura">
-                <img src="https://via.placeholder.com/800x600" class="img-fluid" alt="Manicura y Pedicura">
+        <div class="col-md-4 col-sm-6">
+            <a href="{% static 'img/spa-3.jpg' %}" class="gallery-item" data-lightbox="gallery" data-title="Tratamiento facial">
+                <img src="{% static 'img/spa-3.jpg' %}" alt="Tratamiento facial" class="img-fluid rounded">
+                <div class="gallery-caption">Tratamiento facial</div>
             </a>
         </div>
-        <!-- Imagen 4 -->
-        <div class="col-md-4 mb-4">
-            <a href="https://via.placeholder.com/800x600" data-lightbox="galeria" data-title="Ambiente Relaxante">
-                <img src="https://via.placeholder.com/800x600" class="img-fluid" alt="Ambiente Relaxante">
+        <div class="col-md-4 col-sm-6">
+            <a href="{% static 'img/spa-4.jpg' %}" class="gallery-item" data-lightbox="gallery" data-title="Sauna">
+                <img src="{% static 'img/spa-4.jpg' %}" alt="Sauna" class="img-fluid rounded">
+                <div class="gallery-caption">Sauna</div>
             </a>
         </div>
-        <!-- Imagen 5 -->
-        <div class="col-md-4 mb-4">
-            <a href="https://via.placeholder.com/800x600" data-lightbox="galeria" data-title="Sala de Masajes">
-                <img src="https://via.placeholder.com/800x600" class="img-fluid" alt="Sala de Masajes">
+        <div class="col-md-4 col-sm-6">
+            <a href="{% static 'img/spa-5.jpg' %}" class="gallery-item" data-lightbox="gallery" data-title="Área de descanso">
+                <img src="{% static 'img/spa-5.jpg' %}" alt="Área de descanso" class="img-fluid rounded">
+                <div class="gallery-caption">Área de descanso</div>
             </a>
         </div>
-        <!-- Imagen 6 -->
-        <div class="col-md-4 mb-4">
-            <a href="https://via.placeholder.com/800x600" data-lightbox="galeria" data-title="Espacio de Relax">
-                <img src="https://via.placeholder.com/800x600" class="img-fluid" alt="Espacio de Relax">
-            </a>
-        </div>
-        <!-- Imagen 7 -->
-        <div class="col-md-4 mb-4">
-            <a href="https://via.placeholder.com/800x600" data-lightbox="galeria" data-title="Espacio de Relax">
-                <img src="https://via.placeholder.com/800x600" class="img-fluid" alt="Espacio de Relax">
-            </a>
-        </div>
-        <!-- Imagen 8 -->
-        <div class="col-md-4 mb-4">
-            <a href="https://via.placeholder.com/800x600" data-lightbox="galeria" data-title="Espacio de Relax">
-                <img src="https://via.placeholder.com/800x600" class="img-fluid" alt="Espacio de Relax">
-            </a>
-        </div>
-        <!-- Imagen 9 -->
-        <div class="col-md-4 mb-4">
-            <a href="https://via.placeholder.com/800x600" data-lightbox="galeria" data-title="Espacio de Relax">
-                <img src="https://via.placeholder.com/800x600" class="img-fluid" alt="Espacio de Relax">
-            </a>
-        </div>
-        <!-- Imagen 10 -->
-        <div class="col-md-4 mb-4">
-            <a href="https://via.placeholder.com/800x600" data-lightbox="galeria" data-title="Espacio de Relax">
-                <img src="https://via.placeholder.com/800x600" class="img-fluid" alt="Espacio de Relax">
-            </a>
-        </div>
-        <!-- Imagen 11 -->
-        <div class="col-md-4 mb-4">
-            <a href="https://via.placeholder.com/800x600" data-lightbox="galeria" data-title="Espacio de Relax">
-                <img src="https://via.placeholder.com/800x600" class="img-fluid" alt="Espacio de Relax">
-            </a>
-        </div>
-        <!-- Imagen 12 -->
-        <div class="col-md-4 mb-4">
-            <a href="https://via.placeholder.com/800x600" data-lightbox="galeria" data-title="Espacio de Relax">
-                <img src="https://via.placeholder.com/800x600" class="img-fluid" alt="Espacio de Relax">
+        <div class="col-md-4 col-sm-6">
+            <a href="{% static 'img/spa-6.jpg' %}" class="gallery-item" data-lightbox="gallery" data-title="Manicura y pedicura">
+                <img src="{% static 'img/spa-6.jpg' %}" alt="Manicura y pedicura" class="img-fluid rounded">
+                <div class="gallery-caption">Manicura y pedicura</div>
             </a>
         </div>
     </div>
 </section>
-
 {% endblock %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+<script>
+    lightbox.option({
+        'resizeDuration': 200,
+        'wrapAround': true
+    });
+</script>
+{% endblock %}
+
