@@ -3,7 +3,8 @@
 {% block titulo %} Servicios - Trabajadores {% endblock %}
 
 {% block contenido %} 
-
+<div class="card-header"><br><a name="" id="" class="btn btn-success" href="{% url 'c_servicio' %}" role="button">Nuevo Servicio</a>
+</div>
 {% for servicio in servicios %}
 <div class="row offset-md">
 
@@ -13,14 +14,11 @@
 
             <div class="card-body">
               <img src="" class="card-img-top" style="width:100px;" alt="...">
-              <h5 class="card-title"> ID Reserva: {{ servicio.servicio_id }} </h5>
+              <h5 class="card-title"> ID Servicio: {{ servicio.servicio_id }} </h5>
               <h5 class="card-title">Precio: ${{ servicio.servicio_precio }}</h5>
               <h6 class="card-title">Descripción: ${{ servicio.servicio_descripcion }}</h6>
-  
-              <details>
-                  <summary>Servicios implicados</summary>
-                  <p> {{ servicio.servicio_servicios }} </p>
-              </details>
+              <h5 class="card-title">Bloque horario: {{ servicio.servicio_bh }} hrs</h5>
+              <h5 class="card-title">Imágenes: {{ servicio.servicio_imagenes}}</h5>
   
             <a href="productos.html#Saga3-2" class="btn  border-0"><i class="fa-solid fa-cart-shopping" aria-hidden="true"></i> $5.990</a>
             <br> <a href="productos.html#Saga3-all" class="btn  border-0 end" "="">Ver toda la saga</a>
