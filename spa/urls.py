@@ -29,15 +29,15 @@ urlpatterns = [
     
 # Servicios    
     path('servicios', views.servicios, name='servicios'),
-    path('c_servicios', views.c_servicios, name='c_servicios'),
-    path('u_servicios', views.u_servicios, name='u_servicios'),
-    path('d_servicios', views.d_servicios, name='d_servicios'),   
+    path('c_servicio', views.c_servicio, name='c_servicio'),
+    path('u_servicio', views.u_servicio, name='u_servicio'),
+    path('d_servicio', views.d_servicio, name='d_servicio'),   
     
 # Promociones
     path('promos', views.promos, name='promos'),
-    path('c_promos', views.c_promos, name='c_promos'),
-    path('u_promos', views.u_promos, name='u_promos'),
-    path('d_promos', views.d_promos, name='d_promos'),
+    path('c_promo', views.c_promo, name='c_promo'),
+    path('u_promo', views.u_promo, name='u_promo'),
+    path('d_promo', views.d_promo, name='d_promo'),
 
 # Galeria
     path('galeria', views.galeria, name='galeria'),

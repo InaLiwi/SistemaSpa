@@ -54,14 +54,14 @@ def promos(request):
     promos = Promocion.objects.all()
     return render(request, 'promociones/index.html', {'promos': promos})
 
-def c_promos(request):
+def c_promo(request):
     formulario = PromocionForm(request.POST or None, request.FILES or None)
     if formulario.is_valid():
         formulario.save()
         return redirect('promos')
     return render(request, 'promociones/crear.html', {'formulario':formulario})
 
-def u_promos(request, promocion_id):
+def u_promo(request, promocion_id):
     promocion = get_object_or_404(Promocion, promocion_id=promocion_id)
     if request.method == 'POST':
         formulario = PromocionForm(request.POST, request.FILES, instance=promocion)
@@ -72,10 +72,39 @@ def u_promos(request, promocion_id):
         formulario =PromocionForm(instance=promocion)  
     return render(request, 'promociones/editar.html', {'formulario': formulario})
 
-def d_promos(request, promocion_id):
+def d_promo(request, promocion_id):
     promocion = Promocion.objects.get(promocion_id = promocion_id)
     promocion.delete()
     
+
+# ----- SERVICIOS -----
+def servicios(request):
+    servicios = Servicio.objects.all()
+    return render(request, 'servicios/index.html', {'servicios': servicios})
+
+def c_servicio(request):
+    formulario = ServicioForm(request.POST or None, request.FILES or None)
+    if formulario.is_valid():
+        formulario.save()
+        return redirect('servicios')
+    return render(request, 'servicios/crear.html', {'formulario':formulario})
+
+def u_servicio(request, servicio_id):
+    servicio = get_object_or_404(Servicio, servicio_id=servicio_id)
+    if request.method == 'POST':
+        formulario = ServicioForm(request.POST, request.FILES, instance=servicio)
+        if formulario.is_valid():
+            formulario.save()  
+            return redirect('servicios')  
+    else:
+        formulario = ServicioForm(instance=servicio)  
+    return render(request, 'servicios/editar.html', {'formulario': formulario})
+
+def d_servicio(request, servicio_id):
+    servicio = Servicio.objects.get(servicio_id = servicio_id)
+    servicio.delete()
+    return redirect('servicios')
+
 
 # ----- OTROS ------
 def galeria(request):
@@ -101,19 +130,3 @@ def registro(request):
         form = UserCreationForm()
     return render(request, 'registration/registro.html', {'form': form})
 
-
-
-'''
-def libros(request):
-    libros = Libro.objects.all()
-    return render(request, 'libros/index.html', {'libros': libros})
-
-def crear(request):
-    formulario = LibroForm(request.POST or None, request.FILES or None)
-    if formulario.is_valid():
-        formulario.save()
-        return redirect('libros')
-    return render(request, 'libros/crear.html', {'formulario':formulario})
-
-def editar(request):
-    return render(request, 'libros/editar.html')'''
