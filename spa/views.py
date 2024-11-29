@@ -114,7 +114,7 @@ def contacto(request):
     return render(request, 'paginas/contacto.html')
 
 def login(request):
-    return render(request, 'paginas/login.html')
+    return render(request, 'spa/login.html')
 
 def registro(request):
     if request.method == 'POST':

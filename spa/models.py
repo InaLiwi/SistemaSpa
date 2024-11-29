@@ -1,12 +1,12 @@
 from django.db import models
 
-class Dia(models.Model):    
-    dia_id = models.AutoField(primary_key=True)
-    dia_fecha = models.DateField(unique=True)
+#class Dia(models.Model):    
+#    dia_fecha = models.DateField(unique=True)
 
 class BloqueHora(models.Model):
     bh_id = models.AutoField(primary_key=True, unique=True)
-    bh_dia = models.ForeignKey(Dia, on_delete=models.CASCADE, related_name='bloques')
+    #bh_dia = models.ForeignKey(Dia, on_delete=models.CASCADE, related_name='bloques')
+    bh_dia = models.DateField(verbose_name='Fecha')
     bh_hora_inicio = models.TimeField()  # Hora de inicio del bloque
     bh_hora_fin = models.TimeField()     # Hora de fin del bloque
 
