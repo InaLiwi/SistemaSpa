@@ -1,34 +1,25 @@
 from django.db import models
 
-#class Dia(models.Model):    
-#    dia_fecha = models.DateField(unique=True)
-
 class BloqueHora(models.Model):
     bh_id = models.AutoField(primary_key=True, unique=True)
-    #bh_dia = models.ForeignKey(Dia, on_delete=models.CASCADE, related_name='bloques')
     bh_dia = models.DateField(verbose_name='Fecha')
-    bh_hora_inicio = models.TimeField()  # Hora de inicio del bloque
-    bh_hora_fin = models.TimeField()     # Hora de fin del bloque
+    bh_hora_inicio = models.TimeField()
+    bh_hora_fin = models.TimeField()
 
     def __str__(self):
-        fila =  f"{self.bh_dia}, de {self.bh_hora_inicio} a {self.bh_hora_fin} hrs."
-        return fila
-
-
-
+        return f"{self.bh_dia}, de {self.bh_hora_inicio} a {self.bh_hora_fin} hrs."
 
 
 class Servicio(models.Model):
     servicio_id = models.AutoField(primary_key=True)
-    servicio_precio = models.IntegerField( verbose_name='Precio del servicio: ')
+    servicio_precio = models.IntegerField(verbose_name='Precio del servicio: ')
     servicio_descripcion = models.CharField(max_length=200, verbose_name='Descripción: ')
     servicio_bh = models.ForeignKey(BloqueHora, on_delete=models.CASCADE, related_name='servicios')
     servicio_imagenes = models.ImageField(upload_to='imagenes/', verbose_name='Imagen Portada', null=True, blank=True)
 
     def __str__(self):
-        fila = "Servicio: " + str(self.servicio_id) + " || "  + "Descripción: " + self.servicio_descripcion + " || "  + "Precio: $" + str(self.servicio_precio) + " || "  + "Fecha y Hora: " + str(self.servicio_bh)
-        return fila
-    
+        return f"Servicio: {self.servicio_id} || Descripción: {self.servicio_descripcion} || Precio: ${self.servicio_precio}"
+
     def delete(self, using=None, keep_parents=False):
         self.servicio_imagenes.storage.delete(self.servicio_imagenes.name)
         super().delete()
@@ -36,14 +27,12 @@ class Servicio(models.Model):
 
 class Promocion(models.Model):
     promocion_id = models.AutoField(primary_key=True)
-    promocion_precio = models.IntegerField(verbose_name='Precio del servicio: ')
+    promocion_precio = models.IntegerField(verbose_name='Descuento en CLP: ')
     promocion_descripcion = models.CharField(max_length=200, verbose_name='Descripción: ')
-    promocion_servicios = models.ForeignKey(Servicio, on_delete=models.CASCADE, related_name='promos')
-    #promocion_servicios = models.arreglo(verbose_name= 'Fecha y Hora del servicio: ')
-    
+    promocion_servicios = models.ManyToManyField(Servicio, related_name='promos', verbose_name='Servicios aplicables')
+
     def __str__(self):
-        fila = "Promoción: " + str(self.promocion_id) + " || "  + "Descripción: " + self.promocion_descripcion + " || "  + "Precio: $" + str(self.promocion_precio)
-        return fila
+        return f"Promoción: {self.promocion_id} || Descripción: {self.promocion_descripcion} || Descuento: ${self.promocion_precio}"
 
 
 class Usuario(models.Model):
@@ -52,8 +41,7 @@ class Usuario(models.Model):
     usuario_tipo = models.CharField(max_length=15, verbose_name='Tipo de usuario: administrador, trabajador, cliente')
 
     def __str__(self):
-        fila = "Usuario: " + self.usuario_nombreUsuario + " || "  + "Tipo de usuario: " + self.usuario_tipo
-        return fila
+        return f"Usuario: {self.usuario_nombreUsuario} || Tipo de usuario: {self.usuario_tipo}"
 
 
 class Cliente(Usuario):
@@ -62,19 +50,30 @@ class Cliente(Usuario):
     cliente_telefono = models.IntegerField(verbose_name='Número de teléfono: ')
 
     def __str__(self):
-        fila = "Usuario: " + self.usuario_nombreUsuario + " || "  + "Nombre: " + self.cliente_nombreCliente + " || "  + "Dirección: " + self.cliente_direccion + " || "  + "Nombre: " + str(self.cliente_telefono)
-        return fila
-
-
+        return f"Usuario: {self.usuario_nombreUsuario} || Nombre: {self.cliente_nombreCliente} || Dirección: {self.cliente_direccion} || Teléfono: {self.cliente_telefono}"
 
 
 class Reserva(models.Model):
     reserva_id = models.AutoField(primary_key=True)
-    reserva_servicios = models.ForeignKey(Servicio, on_delete=models.CASCADE, related_name='reservaServicios')
-    reserva_promos = models.ForeignKey(Promocion, on_delete=models.CASCADE, related_name='reservaPromos')
-    reserva_precioTotal = models.IntegerField()
-    reserva_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, related_name='cliente')
+    reserva_servicios = models.ManyToManyField(Servicio, related_name='reservas', through='ReservaServicioPromocion')
+    reserva_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, related_name='reservas')
 
     def __str__(self):
-        fila = "Reserva: " + str(self.reserva_id) + " || "  + "Cliente: " + self.reserva_cliente  + " || "  + "Precio total: " + str(self.reserva_precioTotal)
-        return fila
+        return f"Reserva: {self.reserva_id} || Cliente: {self.reserva_cliente}"
+
+    def calcular_precio_total(self):
+        total = 0
+        for reserva_servicio in self.reservaservicio_set.all():
+            total += reserva_servicio.calcular_precio_final()
+        return total
+
+
+class ReservaServicioPromocion(models.Model):
+    reserva = models.ForeignKey(Reserva, on_delete=models.CASCADE)
+    servicio = models.ForeignKey(Servicio, on_delete=models.CASCADE)
+    promocion = models.ForeignKey(Promocion, null=True, blank=True, on_delete=models.SET_NULL)
+
+    def calcular_precio_final(self):
+        if self.promocion and self.servicio in self.promocion.promocion_servicios.all():
+            return max(self.servicio.servicio_precio - self.promocion.promocion_precio, 0)
+        return self.servicio.servicio_precio

@@ -4,42 +4,43 @@
 
 {% block contenido %} 
 
-<div class="card mt-5">
-    <div class="card-header"><a name="" id="" class="btn btn-success" href="{% url 'c_reserva' %}" role="button">Nueva Reserva</a>
+{% if group.name == "trabajadores" %}
+{% endif %}<br>
+
+
+
+<div class="row offset-md">
+
+    <div class="col-sm-6 col-md-4 col-lg-3">
+
+        {% for reserva in reservas %}
+        <!-- TARJETA -->
+        <div class="card border-0" id="tarjetas">
+              <img src="/imagenes/fldsmdfr.jpg" class="card-img-top" style="width:100px;" >
+            <div class="card-body">
+              <h5 class="card-title">ID reserva: {{ reserva.reserva_id }} </h5>
+              <h5 class="card-title">Cliente: {{ reserva.reserva_cliente.cliente_nombreCliente }} </h5>
+              <details>
+                <summary>Servicios implicados</summary>
+                <p> {{ reserva.reserva_servicios }} </p>
+            </details>
+
+            <details>
+                <summary>Promociones implicadas</summary>
+                <p> {{ reserva.reserva_promos }} </p>
+            </details>
+              <h6 class="card-title">Fecha: {{ reserva.reserva }}</h6>
+              <h6 class="card-title">Precio total de la reserva: ${{ reserva.reserva_precioTotal }} </h6>
+  
+            <a href="" class="btn  border-0"><i class="fa-solid fa-cart-shopping" aria-hidden="true"></i> Reservar </a>
+            </div>
+        </div> <br>
+        <!-- tarjeta fin -->
+        {% endfor %}
+
     </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">Id</th>
-                        <th scope="col">Titulo</th>
-                        <th scope="col">Imagen</th>
-                        <th scope="col">Descripción</th>
-                        <th scope="col">Fecha Publicacion</th>
-                        <th scope="col">Acciones</th>
-                        
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for reserva in reservas%}
-                    <tr class="">
-                        <td scope="row">{{reserva.reserva_id}}</td>
-                        <td>{{reserva.reserva_nombre}}</td>
-                        <td><img src="{{reserva.reserva_imagen.url}}" height="100"></td>
-                        <td>{{reserva.reserva_descripcion}}</td>
-                        <td>{{reserva.reserva_fecha_publicacion}}</td>
-                        <td>
-                            <a name="" id="" class="btn btn-warning" href="{% url 'u_reserva'%}" role="button">Editar</a>
-                            <a name="" id="" class="btn btn-danger" href="#" role="button">Eliminar</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="card-footer text-muted">Hola...</div>
+
 </div>
+
 
 {% endblock %}

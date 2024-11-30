@@ -1,0 +1,59 @@
+El error `AttributeError: 'Reserva' object has no attribute 'reservaservicio_set'` indica que Django no encuentra la relación inversa entre el modelo `Reserva` y el modelo intermedio (probablemente `ReservaServicioPromocion`).
+
+Esto puede suceder porque el modelo `Reserva` no tiene una relación explícita definida con el modelo intermedio. Django, por defecto, usa el nombre del modelo relacionado con un sufijo `_set` para las relaciones inversas, pero si no está configurada correctamente, este comportamiento puede fallar.
+
+### Posible Solución
+
+#### 1. Revisa el modelo `ReservaServicioPromocion`
+Asegúrate de que el modelo intermedio (`ReservaServicioPromocion`, o como lo hayas llamado) tenga un campo `ForeignKey` hacia `Reserva`, y que este tenga configurado el atributo `related_name`.
+
+Por ejemplo:
+
+```python
+class ReservaServicioPromocion(models.Model):
+    reserva = models.ForeignKey(Reserva, on_delete=models.CASCADE, related_name='detalles')
+    servicio = models.ForeignKey(Servicio, on_delete=models.CASCADE)
+    promocion = models.ForeignKey(Promocion, on_delete=models.SET_NULL, null=True, blank=True)
+```
+
+Aquí, la clave es el atributo `related_name='detalles'`. Esto permitirá acceder desde un objeto de `Reserva` a los objetos relacionados de `ReservaServicioPromocion` usando `reserva.detalles.all()`.
+
+#### 2. Modifica el método `calcular_precio_total` en el modelo `Reserva`
+
+Reemplaza cualquier referencia a `reservaservicio_set` por el nombre definido en `related_name` del modelo intermedio. Por ejemplo:
+
+```python
+class Reserva(models.Model):
+    # Otros campos aquí...
+    
+    def calcular_precio_total(self):
+        total = 0
+        # Recorremos los detalles relacionados (ReservaServicioPromocion)
+        for detalle in self.detalles.all():
+            precio = detalle.servicio.servicio_precio
+            if detalle.promocion:
+                precio -= detalle.promocion.promocion_precio  # Aplica la promoción
+            total += precio
+        return total
+```
+
+Con esto, el método usará la relación definida correctamente.
+
+#### 3. Revisa las Migraciones
+Si hiciste cambios al modelo, ejecuta las migraciones para que se reflejen en la base de datos:
+
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
+
+#### 4. Verifica en la Vista de Reservas
+Si utilizas `calcular_precio_total` en la vista de reservas, asegúrate de que estés llamando correctamente el método en lugar de intentar acceder a atributos inexistentes. Por ejemplo:
+
+```python
+reservas = Reserva.objects.all()
+for reserva in reservas:
+    reserva.reserva_precioTotal = reserva.calcular_precio_total()
+```
+
+Con estos ajustes, el error debería solucionarse. Si persiste o necesitas ayuda adicional, indícame cómo configuraste tu modelo intermedio y puedo profundizar en el análisis.
