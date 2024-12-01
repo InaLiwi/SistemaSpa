@@ -63,13 +63,18 @@ class Reserva(models.Model):
 
     def calcular_precio_total(self):
         total = 0
-        for reserva_servicio in self.reservaservicio_set.all():
-            total += reserva_servicio.calcular_precio_final()
+        # Recorremos los detalles relacionados (ReservaServicioPromocion)
+        for detalle in self.detalles.all():
+            precio = detalle.servicio.servicio_precio
+            if detalle.promocion:
+                precio -= detalle.promocion.promocion_precio  # Aplica la promoción
+            total += precio
         return total
 
 
+
 class ReservaServicioPromocion(models.Model):
-    reserva = models.ForeignKey(Reserva, on_delete=models.CASCADE)
+    reserva = models.ForeignKey(Reserva, on_delete=models.CASCADE, related_name='detalles')
     servicio = models.ForeignKey(Servicio, on_delete=models.CASCADE)
     promocion = models.ForeignKey(Promocion, null=True, blank=True, on_delete=models.SET_NULL)
 

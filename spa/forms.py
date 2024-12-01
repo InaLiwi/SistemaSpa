@@ -9,7 +9,7 @@ class LibroForm(forms.ModelForm):
         
 '''
 
-from .models import *
+from .models import Servicio, Promocion, Reserva, ReservaServicioPromocion
 
 class ServicioForm(forms.ModelForm):
     class Meta:

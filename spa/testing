@@ -1,0 +1,12 @@
+NOTA IMPORTANTE:
+Al crear usuarios y asignarles grupo en IP/admin, estos efectivamente son creados y útiles para el inicio de sesión.
+Sin embargo, no por crearlos en /admin son creados en la BD, de modo que NO SON ÚTILES PARA RESERVAR.
+- ¿Tenemos que unir todo en la base de datos propia de /admin? Es decir, poner ahí usuarios, grupos, reservas, promos y servicios
+- ¿O podemos hacer que los usuarios credos en /admin se creen de manera automática en la bd?
+No podemos borrar a los usuarios de /admin, porque esa sección es vital para el login de django.
+
+
+OTROS PENDIENTES:
+- Poner un <detail> dentro de las reservas y las promociones, para poder seleccionar fácilmente los servicios y promos implicados en cada una, en vez de estar escribiendo la id (que es desconocida para el usuario).
+- Capturar automáticamente el nombre de usuario cuando la reserva se hace desde el perfil de un cliente. Y que solo sea necesario especificar el nombre de usuario cuando es un trabajador quien está reservando para un cliente.
+- Activar los botones de RESERVAR en servicios y promociones, para que efectivamente lleven hacia un formulario semi-completado.

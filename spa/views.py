@@ -35,7 +35,7 @@ def reservas(request):
         reserva.precio_total = reserva.calcular_precio_total()  # Método en el modelo Reserva
     return render(request, 'reservas/index.html', {'reservas': reservas})
 
-
+#cliente = 'null'
 def c_reserva(request):
     if request.method == 'POST':
         formulario = ReservaForm(request.POST or None, request.FILES or None)

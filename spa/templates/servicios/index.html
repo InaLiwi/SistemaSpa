@@ -4,10 +4,12 @@
 
 {% block contenido %} 
 
+{% for group in user.groups.all %}
 {% if group.name == "trabajadores" %}
 <div class="card-header"><br><a name="" id="" class="btn btn-success" href="{% url 'c_servicio' %}" role="button">Nuevo Servicio</a>
 </div>
 {% endif %}<br>
+{% endfor %}
 
 
 {% for servicio in servicios %}
