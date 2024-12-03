@@ -62,7 +62,7 @@ def c_reserva(request):
                 # Crear relación en ReservaServicioPromocion
                 ReservaServicioPromocion.objects.create(reserva=reserva, servicio=servicio, promocion=promocion)
 
-            return redirect('reservas')
+            #return redirect('reservas')
     else:
         formulario = ReservaForm()
 
@@ -73,12 +73,13 @@ def c_reserva(request):
 '''def reservas(request):
     reservas = Reserva.objects.all()
     return render(request, 'reservas/index.html', {'reservas': reservas})
-
-def c_reserva(request):
+'''
+'''def c_reserva(request):
     formulario = ReservaForm(request.POST or None, request.FILES or None)
     if formulario.is_valid():
         formulario.save()
         return redirect('reservas')
+    ReservaServicioPromocion.objects.create(reserva=reserva, servicio=servicio, promocion=promocion)
     return render(request, 'reservas/crear.html', {'formulario':formulario})'''
 
 def u_reserva(request, reserva_id):

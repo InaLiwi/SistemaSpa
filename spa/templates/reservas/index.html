@@ -1,46 +1,56 @@
 {% extends "base.html" %}
-
 {% block titulo %} Reservas {% endblock %}
+
 
 {% block contenido %} 
 
-
-<div class="card-header"><br><a name="" id="" class="btn btn-success" href="{% url 'c_reserva' %}" role="button">Nueva Reserva</a>
-</div><br>
-
-
-<div class="row offset-md">
-
-    <div class="col-sm-6 col-md-4 col-lg-3">
-
-        {% for reserva in reservas %}
-        <!-- TARJETA -->
-        <div class="card border-0" id="tarjetas">
-              <img src="/imagenes/fldsmdfr.jpg" class="card-img-top" style="width:100px;" >
-            <div class="card-body">
-              <h5 class="card-title">ID reserva: {{ reserva.reserva_id }} </h5>
-              <h5 class="card-title">Cliente: {{ reserva.reserva_cliente.cliente_nombreCliente }} </h5>
-              <details>
-                <summary>Servicios implicados</summary>
-                <p> {{ reserva.reserva_servicios }} </p>
-            </details>
-
-            <details>
-                <summary>Promociones implicadas</summary>
-                <p> {{ reserva.reserva_promos }} </p>
-            </details>
-              <h6 class="card-title">Fecha: {{ reserva.reserva }}</h6>
-              <h6 class="card-title">Precio total de la reserva: ${{ reserva.reserva_precioTotal }} </h6>
+{% if user.is_authenticated %} <!-- Si el usuario SÍ ha iniciado sesión -->
   
-            <a href="" class="btn  border-0"><i class="fa-solid fa-cart-shopping" aria-hidden="true"></i> Reservar </a>
-            </div>
-        </div> <br>
-        <!-- tarjeta fin -->
-        {% endfor %}
+{% for group in user.groups.all %} <!-- Analizar el grupo al que pertenece -->
+    {% if group.name == "trabajadores" %}
+    <div class="card-header"><br><a name="" id="" class="btn btn-success" href="{% url 'c_reserva' %}" role="button">Nueva Reserva</a></div>
+    {% endif %}<br>
+  {% endfor %} <!--end "for groups"-->
 
-    </div>
+  <div class="row offset-md">
 
-</div>
+      <div class="col-sm-6 col-md-4 col-lg-3">
+
+          {% for reserva in reservas %}
+          <!-- TARJETA -->
+          <div class="card border-0" id="tarjetas">
+                <img src="/imagenes/fldsmdfr.jpg" class="card-img-top" style="width:100px;" >
+              <div class="card-body">
+                <h5 class="card-title">ID reserva: {{ reserva.reserva_id }} </h5>
+                <h5 class="card-title">Cliente: {{ reserva.reserva_cliente.cliente_nombreCliente }} </h5>
+                <details>
+                  <summary>Servicios implicados</summary>
+                  <p> {{ reserva.reserva_servicios }} </p>
+              </details>
+
+              <details>
+                  <summary>Promociones implicadas</summary>
+                  <p> {{ reserva.reserva_promos }} </p>
+              </details>
+                <h6 class="card-title">Fecha: {{ reserva.reserva }}</h6>
+                <h6 class="card-title">Precio total de la reserva: ${{ reserva.reserva_precioTotal }} </h6>
+    
+              <a href="" class="btn  border-0"><i class="fa-solid fa-cart-shopping" aria-hidden="true"></i> Reservar </a>
+              </div>
+          </div> <br>
+          <!-- tarjeta fin -->
+          {% endfor %}
+
+      </div>
+
+  </div>
 
 
-{% endblock %}
+  {% else %} <!-- Si el usuario NO ha iniciado sesión -->
+    <br> <h4 class="text-center"> Para ver sus reservaciones, inicie sesión. </h4>
+    
+
+  
+{% endif %}
+
+  {% endblock %}
