@@ -25,7 +25,7 @@ def inicio(request):
 # ----- RESERVAS ------
 
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Reserva, Servicio, Promocion, Cliente, ReservaServicioPromocion
+from .models import *
 from .forms import ReservaForm  # Suponiendo que tienes un formulario predefinido
 
 def reservas(request):
@@ -55,12 +55,16 @@ def c_reserva(request):
                 promocion = None
                 if promociones_ids:
                     for promo_id in promociones_ids:
-                        promo = Promocion.objects.get(promocion_id=promo_id)
+                        promo = PromocionServicio.objects.get(promocion_id=promo_id)
                         if servicio in promo.promocion_servicios.all():
                             promocion = promo
                             break
-                # Crear relación en ReservaServicioPromocion
-                ReservaServicioPromocion.objects.create(reserva=reserva, servicio=servicio, promocion=promocion)
+                
+                ReservaPromocion.objects.create(reserva_id=reserva, promo_id=promocion)
+                #PromocionServicio.objects.create(promo_id=formulario, servicio_id=servicio)
+                
+                '''# Crear relación en ReservaServicioPromocion
+                ReservaServicioPromocion.objects.create(reserva=reserva, servicio=servicio, promocion=promocion)'''
 
             #return redirect('reservas')
     else:

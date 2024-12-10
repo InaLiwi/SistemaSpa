@@ -10,3 +10,31 @@ OTROS PENDIENTES:
 - Poner un <detail> dentro de las reservas y las promociones, para poder seleccionar fácilmente los servicios y promos implicados en cada una, en vez de estar escribiendo la id (que es desconocida para el usuario).
 - Capturar automáticamente el nombre de usuario cuando la reserva se hace desde el perfil de un cliente. Y que solo sea necesario especificar el nombre de usuario cuando es un trabajador quien está reservando para un cliente.
 - Activar los botones de RESERVAR en servicios y promociones, para que efectivamente lleven hacia un formulario semi-completado.
+
+
+
+select * from spa_promocionservicio inner join spa_reservapromocion on spa_reservapromocion.promocion_id = spa_promocionservicio.promocion_id;
+
+
+select * from spa_promocionservicio inner join spa_reservapromocion on spa_reservapromocion.promocion_id = spa_promocionservicio.promocion_id inner join spa_reserva on spa_reserva.reserva_id = spa_reservapromocion.reserva_id;
+
+
+
+// NO DEVOLVIÓ NADA
+select spa_cliente.cliente_nombreCliente, spa_servicio.servicio_descripcion,
+spa_promocion.promocion_precio
+
+from 
+spa_promocionservicio inner join spa_reservapromocion on spa_reservapromocion.promocion_id = spa_promocionservicio.promocion_id 
+
+inner join spa_servicio ON
+spa_servicio.servicio_id = spa_promocionservicio.servicio_id
+
+inner join spa_reserva on spa_reserva.reserva_id = spa_reservapromocion.reserva_id
+
+inner join spa_cliente 
+on spa_reserva.reserva_cliente_id = spa_cliente.cliente_nombreCliente
+
+inner join spa_promocion
+on spa_promocion.promocion_id = spa_reservapromocion.promocion_id
+;
