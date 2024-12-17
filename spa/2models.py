@@ -40,8 +40,8 @@ class Promocion(models.Model):
 
 
 class PromocionServicio(models.Model):
-    promo_id = models.ForeignKey(Promocion, on_delete=models.CASCADE, related_name='detalles_promocion_servicio', verbose_name='Promociones aplicables')
-    servicios_id = models.ForeignKey(Servicio, on_delete=models.CASCADE, related_name='detalles_promocion_servicio', verbose_name='Servicios aplicables')
+    promo_id = models.ForeignKey(Promocion, on_delete=models.CASCADE, related_name='detalles_promocion', verbose_name='Promociones aplicables')
+    servicios_id = models.ForeignKey(Servicio, on_delete=models.CASCADE, related_name='detalles_servicio', verbose_name='Servicios aplicables')
 
     def __str__(self):
         return f"Promoción: {self.promo_id} - Servicio: {self.servicios_id}"
@@ -88,23 +88,27 @@ class Reserva(models.Model):
         return total
 
 
+
+
+
+
 class ReservaPromocion(models.Model):
     reserva_id = models.ForeignKey(
         Reserva,
         on_delete=models.CASCADE,
-        related_name='detalles_reserva_promocion',
+        related_name='detalles_reserva',
         verbose_name='Reserva asociada'
     )
     servicio_id = models.ForeignKey(
         Servicio,
         on_delete=models.CASCADE,
-        related_name='detalles_reserva_promocion',
+        related_name='detalles_servicio',
         verbose_name='Servicio asociado'
     )
     promo_id = models.ForeignKey(
         Promocion,
         on_delete=models.CASCADE,
-        related_name='reservas_promocion_aplicadas',
+        related_name='reservas_aplicadas',
         verbose_name='Promoción asociada',
         null=True,
         blank=True
@@ -113,3 +117,16 @@ class ReservaPromocion(models.Model):
     def __str__(self):
         return f"Reserva: {self.reserva_id}- Promoción: {self.promo_id}"
 
+
+
+
+'''class ReservaServicioPromocion(models.Model):
+    reserva = models.ForeignKey(Reserva, on_delete=models.CASCADE, related_name='detalles')
+    servicio = models.ForeignKey(Servicio, on_delete=models.CASCADE)
+    promocion = models.ForeignKey(Promocion, null=True, blank=True, on_delete=models.SET_NULL)
+
+    def calcular_precio_final(self):
+        if self.promocion and self.servicio in self.promocion.promocion_servicios.all():
+            return max(self.servicio.servicio_precio - self.promocion.promocion_precio, 0)
+        return self.servicio.servicio_precio
+'''
