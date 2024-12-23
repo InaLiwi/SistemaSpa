@@ -6,11 +6,9 @@
 
 {% if user.is_authenticated %} <!-- Si el usuario SÍ ha iniciado sesión -->
   
-{% for group in user.groups.all %} <!-- Analizar el grupo al que pertenece -->
-    {% if group.name == "trabajadores" %}
-    <div class="card-header"><br><a name="" id="" class="btn btn-success" href="{% url 'c_reserva' %}" role="button">Nueva Reserva</a></div>
-    {% endif %}<br>
-  {% endfor %} <!--end "for groups"-->
+
+  <div class="card-header"><br><a name="" id="" class="btn btn-success" href="{% url 'c_reserva' %}" role="button">Nueva Reserva</a></div>
+
 
   <div class="row offset-md">
 

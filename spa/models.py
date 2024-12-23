@@ -56,13 +56,14 @@ class Usuario(models.Model):
         return f"Usuario: {self.usuario_nombreUsuario} || Tipo de usuario: {self.usuario_tipo}"
 
 
-class Cliente(Usuario):
+class Cliente(models.Model):
+    usuario = models.OneToOneField(Usuario, on_delete=models.CASCADE, primary_key=True)
     cliente_nombreCliente = models.CharField(max_length=50, verbose_name='Nombre y Apellido: ')
     cliente_direccion = models.CharField(max_length=200, verbose_name='Dirección: ')
     cliente_telefono = models.IntegerField(verbose_name='Número de teléfono: ')
 
     def __str__(self):
-        return f"Usuario: {self.usuario_nombreUsuario} || Nombre: {self.cliente_nombreCliente} || Dirección: {self.cliente_direccion} || Teléfono: {self.cliente_telefono}"
+        return f"Usuario: {self.usuario.usuario_nombreUsuario} || Nombre: {self.cliente_nombreCliente} || Dirección: {self.cliente_direccion} || Teléfono: {self.cliente_telefono}"
 
 
 class Reserva(models.Model):
