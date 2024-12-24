@@ -47,6 +47,7 @@ def c_reserva(request):
             reserva.reserva_cliente = cliente
             reserva.save()
 '''
+'''
 def c_reserva(request):
     if request.method == 'POST':
         formulario = ReservaForm(request.POST or None, request.FILES or None)
@@ -62,7 +63,7 @@ def c_reserva(request):
             )
             reserva.reserva_cliente = cliente
             reserva.save()
-            
+
 
             # Agregar servicios y promociones
             servicios_ids = request.POST.getlist('servicios')  # IDs de servicios seleccionados
@@ -81,10 +82,52 @@ def c_reserva(request):
                 ReservaPromocion.objects.create(reserva_id=reserva, promo_id=promocion)
                 #PromocionServicio.objects.create(promo_id=formulario, servicio_id=servicio)
                 
-                '''# Crear relación en ReservaServicioPromocion
-                ReservaServicioPromocion.objects.create(reserva=reserva, servicio=servicio, promocion=promocion)'''
+                # Crear relación en ReservaServicioPromocion
+                #ReservaServicioPromocion.objects.create(reserva=reserva, servicio=servicio, promocion=promocion)
 
             #return redirect('reservas')
+    else:
+        formulario = ReservaForm()
+
+    return render(request, 'reservas/crear.html', {'formulario': formulario})
+'''
+@login_required
+def c_reserva(request):
+    if request.method == 'POST':
+        formulario = ReservaForm(request.POST)
+        if formulario.is_valid():
+            reserva = formulario.save(commit=False)
+            
+            # Obtener o crear el cliente
+            cliente = formulario.cleaned_data['cliente']
+            if not cliente:
+                cliente, created = Cliente.objects.get_or_create(
+                    usuario=request.user,
+                    defaults={
+                        'cliente_nombreCliente': request.POST.get('nombre_cliente', ''),
+                        'cliente_direccion': request.POST.get('direccion_cliente', ''),
+                        'cliente_telefono': request.POST.get('telefono_cliente', '')
+                    }
+                )
+            reserva.reserva_cliente = cliente
+            reserva.save()
+
+            # Guardar los servicios seleccionados
+            servicios = formulario.cleaned_data['servicios']
+            for servicio in servicios:
+                # Buscar si hay una promoción aplicable para este servicio
+                promocion = PromocionServicio.objects.filter(
+                    servicios_id=servicio,
+                    promo_id__promocion_servicios=servicio
+                ).first()
+
+                ReservaPromocion.objects.create(
+                    reserva_id=reserva,
+                    servicio_id=servicio,
+                    promo_id=promocion.promo_id if promocion else None
+                )
+
+            return redirect('reservas')
     else:
         formulario = ReservaForm()
 
