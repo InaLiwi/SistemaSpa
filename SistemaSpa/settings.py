@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'SistemaSpa',
-    'spa',
+    #'spa',
+    'spa.apps.SpaConfig',
 ]
 
 LOGIN_REDIRECT_URL = 'inicio'

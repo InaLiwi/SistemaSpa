@@ -48,7 +48,7 @@ class PromocionServicio(models.Model):
 
 
 class Usuario(models.Model):
-    usuario_nombreUsuario = models.CharField(max_length=50, primary_key=True, unique=True, verbose_name='Ingrese un nombre de usuario único: ')
+    usuario_nombreUsuario = models.CharField(max_length=128, primary_key=True, unique=True, verbose_name='Ingrese un nombre de usuario único: ')
     usuario_password = models.CharField(max_length=20, verbose_name='Ingrese una contraseña: ')
     usuario_tipo = models.CharField(max_length=15, verbose_name='Tipo de usuario: administrador, trabajador, cliente')
 

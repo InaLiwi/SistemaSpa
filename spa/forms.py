@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.models import Group
 '''
 from .models import SPA
 
@@ -36,7 +37,8 @@ class ReservaForm(forms.ModelForm):
         required=False
     )
     cliente = forms.ModelChoiceField(
-        queryset=Cliente.objects.all(),
+        queryset=Group.objects.get(name='clientes').user_set.all(),
+        label="Seleccionar cliente",
         empty_label="Seleccione un cliente",
         required=True
     )
