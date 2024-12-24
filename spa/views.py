@@ -36,6 +36,7 @@ def reservas(request):
     return render(request, 'reservas/index.html', {'reservas': reservas})
 
 #cliente = 'null'
+'''
 def c_reserva(request):
     if request.method == 'POST':
         formulario = ReservaForm(request.POST or None, request.FILES or None)
@@ -45,6 +46,23 @@ def c_reserva(request):
             cliente = get_object_or_404(Cliente, usuario_nombreUsuario=request.POST.get('cliente'))
             reserva.reserva_cliente = cliente
             reserva.save()
+'''
+def c_reserva(request):
+    if request.method == 'POST':
+        formulario = ReservaForm(request.POST or None, request.FILES or None)
+        if formulario.is_valid():
+            reserva = formulario.save(commit=False)
+            cliente, created = Cliente.objects.get_or_create(
+                usuario=request.user,
+                defaults={
+                    'cliente_nombreCliente': request.POST.get('nombre_cliente'),
+                    'cliente_direccion': request.POST.get('direccion_cliente'),
+                    'cliente_telefono': request.POST.get('telefono_cliente')
+                }
+            )
+            reserva.reserva_cliente = cliente
+            reserva.save()
+            
 
             # Agregar servicios y promociones
             servicios_ids = request.POST.getlist('servicios')  # IDs de servicios seleccionados

@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'SistemaSpa.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME':'spa1',
+        'NAME':'spa2',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',
