@@ -35,116 +35,42 @@ def reservas(request):
         reserva.precio_total = reserva.calcular_precio_total()  # Método en el modelo Reserva
     return render(request, 'reservas/index.html', {'reservas': reservas})
 
-#cliente = 'null'
-'''
-def c_reserva(request):
-    if request.method == 'POST':
-        formulario = ReservaForm(request.POST or None, request.FILES or None)
-        if formulario.is_valid():
-            # Crear la reserva sin guardar aún
-            reserva = formulario.save(commit=False)
-            cliente = get_object_or_404(Cliente, usuario_nombreUsuario=request.POST.get('cliente'))
-            reserva.reserva_cliente = cliente
-            reserva.save()
-'''
-'''
-def c_reserva(request):
-    if request.method == 'POST':
-        formulario = ReservaForm(request.POST or None, request.FILES or None)
-        if formulario.is_valid():
-            reserva = formulario.save(commit=False)
-            cliente, created = Cliente.objects.get_or_create(
-                usuario=request.user,
-                defaults={
-                    'cliente_nombreCliente': request.POST.get('nombre_cliente'),
-                    'cliente_direccion': request.POST.get('direccion_cliente'),
-                    'cliente_telefono': request.POST.get('telefono_cliente')
-                }
-            )
-            reserva.reserva_cliente = cliente
-            reserva.save()
-
-
-            # Agregar servicios y promociones
-            servicios_ids = request.POST.getlist('servicios')  # IDs de servicios seleccionados
-            promociones_ids = request.POST.getlist('promociones')  # IDs de promociones (opcional)
-
-            for servicio_id in servicios_ids:
-                servicio = get_object_or_404(Servicio, servicio_id=servicio_id)
-                promocion = None
-                if promociones_ids:
-                    for promo_id in promociones_ids:
-                        promo = PromocionServicio.objects.get(promocion_id=promo_id)
-                        if servicio in promo.promocion_servicios.all():
-                            promocion = promo
-                            break
-                
-                ReservaPromocion.objects.create(reserva_id=reserva, promo_id=promocion)
-                #PromocionServicio.objects.create(promo_id=formulario, servicio_id=servicio)
-                
-                # Crear relación en ReservaServicioPromocion
-                #ReservaServicioPromocion.objects.create(reserva=reserva, servicio=servicio, promocion=promocion)
-
-            #return redirect('reservas')
-    else:
-        formulario = ReservaForm()
-
-    return render(request, 'reservas/crear.html', {'formulario': formulario})
-'''
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from .models import Reserva, Servicio, Promocion, PerfilCliente
-from .forms import ReservaForm
-
 @login_required
 def c_reserva(request):
     if request.method == 'POST':
         formulario = ReservaForm(request.POST)
         if formulario.is_valid():
             reserva = formulario.save(commit=False)
-            cliente = formulario.cleaned_data['cliente']
-            # Asignar el usuario actual como cliente de la reserva
-            reserva.reserva_cliente = request.user
+            # Obtener el usuario seleccionado del formulario
+            user = formulario.cleaned_data['cliente']            
+            # Obtener o crear el objeto Cliente asociado con este User
+            cliente, created = Cliente.objects.get_or_create(
+                usuario=user,
+                defaults={
+                    'cliente_nombreCliente': user.get_full_name() or user.username,
+                    'cliente_direccion': '',  # Puedes agregar un campo para esto en el formulario si lo necesitas
+                    'cliente_telefono': ''  # Puedes agregar un campo para esto en el formulario si lo necesitas
+                }
+            )
+            reserva.reserva_cliente = cliente
             reserva.save()
-
-            # Obtener los servicios seleccionados
-            servicios_ids = request.POST.getlist('servicios')  # IDs de servicios seleccionados
-            promociones_ids = request.POST.getlist('promociones')  # IDs de promociones
-
-            for servicio_id in servicios_ids:
-                servicio = get_object_or_404(Servicio, servicio_id=servicio_id)
-                promocion = None
-                
-                if promociones_ids:
-                    # Buscar una promoción válida para el servicio
-                    for promo_id in promociones_ids:
-                        promocion = Promocion.objects.filter(promocion_id=promo_id, promocion_servicios=servicio).first()
-                        if promocion:
-                            break
-            
+            # Guardar los servicios seleccionados
+            servicios = formulario.cleaned_data['servicios']
+            for servicio in servicios:
+                # Buscar si hay una promoción aplicable para este servicio
+                promocion = PromocionServicio.objects.filter(
+                    servicios_id=servicio,
+                    promo_id__promocion_servicios=servicio
+                ).first()
                 ReservaPromocion.objects.create(
                     reserva_id=reserva,
                     servicio_id=servicio,
-                    promo_id=promocion  # Django maneja la instancia correctamente
+                    promo_id=promocion.promo_id if promocion else None
                 )
             return redirect('reservas')
     else:
         formulario = ReservaForm()
     return render(request, 'reservas/crear.html', {'formulario': formulario})
-
-# Mantén tus otras vistas sin cambios
-
-'''def reservas(request):
-    reservas = Reserva.objects.all()
-    return render(request, 'reservas/index.html', {'reservas': reservas})
-'''
-'''def c_reserva(request):
-    formulario = ReservaForm(request.POST or None, request.FILES or None)
-    if formulario.is_valid():
-        formulario.save()
-        return redirect('reservas')
-    ReservaServicioPromocion.objects.create(reserva=reserva, servicio=servicio, promocion=promocion)
-    return render(request, 'reservas/crear.html', {'formulario':formulario})'''
 
 def u_reserva(request, reserva_id):
     reserva = get_object_or_404(Reserva, reserva_id=reserva_id)
@@ -243,4 +169,33 @@ def registro(request):
     else:
         form = UserCreationForm()
     return render(request, 'registration/registro.html', {'form': form})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from .forms import ReservaForm
+from .models import Reserva, Cliente, PromocionServicio, ReservaPromocion
+
+
 

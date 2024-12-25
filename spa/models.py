@@ -1,4 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 class BloqueHora(models.Model):
     bh_id = models.AutoField(primary_key=True, unique=True)
@@ -46,15 +49,32 @@ class PromocionServicio(models.Model):
     def __str__(self):
         return f"Promoción: {self.promo_id} - Servicio: {self.servicios_id}"
 
+class PerfilCliente(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    direccion = models.CharField(max_length=200, blank=True)
+    telefono = models.CharField(max_length=20, blank=True)
 
+    def __str__(self):
+        return self.user.username
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        PerfilCliente.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.perfilcliente.save()
+
+
+'''
 class Usuario(models.Model):
     usuario_nombreUsuario = models.CharField(max_length=128, primary_key=True, unique=True, verbose_name='Ingrese un nombre de usuario único: ')
-    usuario_password = models.CharField(max_length=20, verbose_name='Ingrese una contraseña: ')
+    usuario_password = models.CharField(max_length=255, verbose_name='Ingrese una contraseña: ')
     usuario_tipo = models.CharField(max_length=15, verbose_name='Tipo de usuario: administrador, trabajador, cliente')
 
     def __str__(self):
         return f"Usuario: {self.usuario_nombreUsuario} || Tipo de usuario: {self.usuario_tipo}"
-
 
 class Cliente(models.Model):
     usuario = models.OneToOneField(Usuario, on_delete=models.CASCADE, primary_key=True)
@@ -64,7 +84,7 @@ class Cliente(models.Model):
 
     def __str__(self):
         return f"Usuario: {self.usuario.usuario_nombreUsuario} || Nombre: {self.cliente_nombreCliente} || Dirección: {self.cliente_direccion} || Teléfono: {self.cliente_telefono}"
-
+'''
 
 class Reserva(models.Model):
     reserva_id = models.AutoField(primary_key=True)
@@ -73,20 +93,22 @@ class Reserva(models.Model):
         related_name='reservas',
         through='ReservaPromocion'
     )
-    reserva_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, related_name='reservas')
+    reserva_cliente = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reservas')
 
     def __str__(self):
-        return f"Reserva: {self.reserva_id} || Cliente: {self.reserva_cliente}"
-
+        return f"Reserva: {self.reserva_id} || Cliente: {self.reserva_cliente.username}"
+    
     def calcular_precio_total(self):
         total = 0
-        # Recorremos los detalles relacionados (ReservaServicioPromocion)
-        for detalle in self.detalles.all():
-            precio = detalle.servicio.servicio_precio
-            if detalle.promocion:
-                precio -= detalle.promocion.promocion_precio  # Aplica la promoción
+        # Iteramos sobre los objetos en la tabla intermedia 'ReservaPromocion'
+        for detalle in ReservaPromocion.objects.filter(reserva_id=self):
+            precio = detalle.servicio_id.servicio_precio  # Usamos 'servicio_id' para acceder al precio
+            if detalle.promo_id:  # Si hay una promoción asociada
+                precio -= detalle.promo_id.promocion_precio  # Aplicar descuento de la promoción
             total += precio
         return total
+
+
 
 
 class ReservaPromocion(models.Model):

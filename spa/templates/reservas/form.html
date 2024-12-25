@@ -7,28 +7,12 @@
                 <div class="form-check">
                     {{ campo }}
                 </div>
-            {% elif campo.name == 'cliente' %}
-                {{ campo }}
             {% else %}
-                <input 
-                    type="{{ campo.field.widget.input_type }}"
-                    class="form-control"
-                    name="{{ campo.name }}"
-                    id="{{ campo.id_for_label }}"
-                    aria-describedby="helpId"
-                    placeholder="{{ campo.label }}"
-                    {% if campo.value %}value="{{ campo.value }}"{% endif %}
-                >
+                {{ campo }}
             {% endif %}
             <small id="helpId" class="form-text text-muted">{{ campo.help_text }}</small>
         </div>
         <div class="col-12 help-text">{{ campo.errors }}</div>
     {% endfor %}
-    <input
-        name=""
-        id=""
-        class="btn btn-success"
-        type="submit"
-        value="Guardar"
-    />
+    <input name="" id="" class="btn btn-success" type="submit" value="Guardar" />
 </form>
