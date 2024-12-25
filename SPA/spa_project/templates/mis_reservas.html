@@ -25,6 +25,7 @@
                         {% if reserva.promocion %}
                             <p class="card-text"><strong>Promoción aplicada:</strong> {{ reserva.promocion.nombre }}</p>
                         {% endif %}
+                        <p class="card-text"><strong>Precio total:</strong> {{ reserva.get_estado_display }}</p>
                     </div>
                     <div class="card-footer bg-white border-top-0">
                         {% if reserva.estado == 'pendiente' %}
