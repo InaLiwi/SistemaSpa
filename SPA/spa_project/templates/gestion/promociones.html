@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Gestión de Promociones - Spa Relax{% endblock %}
+
+{% block hero %}
+<section class="hero-section text-white text-center py-5">
+    <div class="container">
+        <h1 class="display-4">Gestión de Promociones</h1>
+        <p class="lead">Administra las promociones del spa</p>
+    </div>
+</section>
+{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <a href="{% url 'crear_promocion' %}" class="btn btn-primary">Crear Nueva Promoción</a>
+    </div>
+</div>
+
+<div class="row">
+    {% for promocion in promociones %}
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ promocion.nombre }}</h5>
+                <p class="card-text">{{ promocion.descripcion }}</p>
+                <p class="card-text"><strong>Descuento:</strong> {{ promocion.descuento }}%</p>
+                <p class="card-text"><strong>Válido desde:</strong> {{ promocion.fecha_inicio }} hasta {{ promocion.fecha_fin }}</p>
+                <h6>Servicios incluidos:</h6>
+                <ul>
+                    {% for servicio in promocion.servicios.all %}
+                        <li>{{ servicio.nombre }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'editar_promocion' promocion.id %}" class="btn btn-warning">Editar</a>
+                <a href="{% url 'eliminar_promocion' promocion.id %}" class="btn btn-danger">Eliminar</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col">
+        <p>No hay promociones disponibles.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+

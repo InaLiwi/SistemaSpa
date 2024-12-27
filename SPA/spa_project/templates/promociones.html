@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Promociones - Spa Relax{% endblock %}
+
+{% block hero %}
+<section class="hero-section text-center py-5">
+    <div class="container">
+        <h1 class="display-4">Nuestras Promociones</h1>
+        <p class="lead">Aprovecha nuestras ofertas especiales y paquetes de servicios</p>
+    </div>
+</section>
+{% endblock %}
+
+{% block content %}
+<section class="promotions-list py-5">
+    <div class="row">
+        {% for promocion in promociones %}
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ promocion.nombre }}</h5>
+                        <p class="card-text">{{ promocion.descripcion }}</p>
+                        <p class="card-text"><strong>Descuento:</strong> {{ promocion.descuento }}%</p>
+                        <p class="card-text"><strong>Válido desde:</strong> {{ promocion.fecha_inicio }} hasta {{ promocion.fecha_fin }}</p>
+                        <h6>Servicios incluidos:</h6>
+                        <ul>
+                            {% for servicio in promocion.servicios.all %}
+                                <li>{{ servicio.nombre }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="card-footer bg-white border-top-0">
+                        <a href="{% url 'hacer_reserva' promocion.servicios.first.id %}?promocion={{ promocion.id }}" class="btn btn-primary">Reservar Promoción</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
+

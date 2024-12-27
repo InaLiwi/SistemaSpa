@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block titulo %} Mis Reservas {% endblock %}
+
+{% block contenido %} 
+<h2>Mis Reservas</h2>
+{% for reserva in reservas %}
+<div class="card mb-3">
+    <div class="card-body">
+        <h5 class="card-title">Reserva #{{ reserva.reserva_id }}</h5>
+        <p class="card-text">Servicios: {{ reserva.reserva_servicios }}</p>
+        <p class="card-text">Promociones: {{ reserva.reserva_promos }}</p>
+        <p class="card-text">Precio Total: ${{ reserva.reserva_precioTotal }}</p>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
+

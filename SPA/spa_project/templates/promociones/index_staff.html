@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block titulo %} Promociones - Trabajadores {% endblock %}
+
+{% block contenido %} 
+<div class="card-header">
+    <br><a name="" id="" class="btn btn-success" href="{% url 'c_promo' %}" role="button">Nueva Promoción</a>
+</div>
+{% for promocion in promos %}
+<div class="row offset-md">
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+        <div class="card border-0" id="tarjetas">
+            <div class="card-body">
+                <h5 class="card-title"> ID Promoción: {{ promocion.promocion_id }} </h5>
+                <h5 class="card-title">Precio: ${{ promocion.promocion_precio }}</h5>
+                <h6 class="card-title">Descripción: {{ promocion.promocion_descripcion }}</h6>
+                <details>
+                    <summary>Servicios implicados</summary>
+                    <ul>
+                        {% for servicio in promocion.servicios.all %}
+                            <li>{{ servicio.nombre }}</li>
+                        {% endfor %}
+                    </ul>
+                </details>
+                <a href="{% url 'u_promo' promocion.promocion_id %}" class="btn btn-primary">Editar</a>
+                <a href="{% url 'd_promo' promocion.promocion_id %}" class="btn btn-danger">Eliminar</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
+

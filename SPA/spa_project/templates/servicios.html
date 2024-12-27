@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Servicios - Spa Relax{% endblock %}
+
+{% block hero %}
+<section class="hero-section text-center py-5">
+    <div class="container">
+        <h1 class="display-4">Nuestros Servicios</h1>
+        <p class="lead">Descubre nuestra amplia gama de tratamientos y terapias</p>
+    </div>
+</section>
+{% endblock %}
+
+{% block content %}
+<section class="services-list py-5">
+    <div class="row">
+        {% for servicio in servicios %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    {% if servicio.imagen %}
+                        <img src="{{ servicio.imagen.url }}" class="card-img-top" alt="{{ servicio.nombre }}">
+                    {% else %}
+                        <img src="{% static 'img/default-service.jpg' %}" class="card-img-top" alt="{{ servicio.nombre }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ servicio.nombre }}</h5>
+                        <p class="card-text">{{ servicio.descripcion }}</p>
+                        <p class="card-text"><strong>Precio:</strong> ${{ servicio.precio }}</p>
+                        <p class="card-text"><strong>Duración:</strong> {{ servicio.duracion }}</p>
+                    </div>
+                    <div class="card-footer bg-white border-top-0">
+                        <a href="{% url 'hacer_reserva' servicio.id %}" class="btn btn-primary">Reservar</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
+

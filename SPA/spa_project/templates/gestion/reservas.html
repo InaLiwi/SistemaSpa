@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Administrar Reservas - Spa Relax{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Administrar Reservas</h1>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Cliente</th>
+                <th>Servicio</th>
+                <th>Fecha</th>
+                <th>Estado</th>
+                <th>Promoción</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for reserva in reservas %}
+                <tr>
+                    <td>{{ reserva.usuario.username }}</td>
+                    <td>{{ reserva.servicio.nombre }}</td>
+                    <td>{{ reserva.fecha }}</td>
+                    <td>{{ reserva.get_estado_display }}</td>
+                    <td>{{ reserva.promocion.nombre|default:"N/A" }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+

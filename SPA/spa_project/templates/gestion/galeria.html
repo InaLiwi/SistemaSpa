@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Gestión de Galería - Spa Relax{% endblock %}
+
+{% block hero %}
+<section class="hero-section text-white text-center py-5">
+    <div class="container">
+        <h1 class="display-4">Gestión de Galería</h1>
+        <p class="lead">Administra las imágenes de la galería del spa</p>
+    </div>
+</section>
+{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPhotoModal">
+            Añadir Nueva Foto
+        </button>
+    </div>
+</div>
+
+<div class="row">
+    {% for foto in fotos %}
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <img src="{{ foto.imagen.url }}" class="card-img-top" alt="{{ foto.titulo }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ foto.titulo }}</h5>
+                <p class="card-text">{{ foto.descripcion }}</p>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'editar_foto' foto.id %}" class="btn btn-warning">Editar</a>
+                <a href="{% url 'eliminar_foto' foto.id %}" class="btn btn-danger">Eliminar</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col">
+        <p>No hay fotos en la galería.</p>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Modal para añadir nueva foto -->
+<div class="modal fade" id="addPhotoModal" tabindex="-1" aria-labelledby="addPhotoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addPhotoModalLabel">Añadir Nueva Foto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" enctype="multipart/form-data" action="{% url 'crear_foto' %}">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

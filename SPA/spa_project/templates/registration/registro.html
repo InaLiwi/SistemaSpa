@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}Registro - Spa Relax{% endblock %}
+
+{% block contenido %}
+<section class="hero text-white text-center py-5 mb-5">
+    <div class="container">
+        <h1 class="display-4">Registro</h1>
+        <p class="lead">Crea tu cuenta para disfrutar de nuestros servicios</p>
+    </div>
+</section>
+
+<section class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-body p-5">
+                    <h2 class="card-title text-center mb-4">Crear Cuenta</h2>
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Registrarse</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="mt-4 text-center">
+                <p>¿Ya tienes una cuenta? <a href="{% url 'login' %}" class="text-decoration-none">Inicia sesión aquí</a></p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

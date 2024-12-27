@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block titulo %} Promociones {% endblock %}
+
+{% block contenido %} 
+{% for promocion in promos %}
+<div class="row offset-md">
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+        <div class="card border-0" id="tarjetas">
+            <div class="card-body">
+                <h5 class="card-title">{{ promocion.promocion_descripcion }}</h5>
+                <h6 class="card-title">Precio: ${{ promocion.promocion_precio }}</h6>
+                <details>
+                    <summary>Servicios incluidos</summary>
+                    <p> {{ promocion.promocion_servicios }} </p>
+                </details>
+                <a href="#" class="btn btn-primary">Reservar</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
+

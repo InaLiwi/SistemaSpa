@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block titulo %} Reservas - Trabajadores {% endblock %}
+
+{% block contenido %} 
+<h2>Lista de Reservas</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Cliente</th>
+            <th>Servicios</th>
+            <th>Promociones</th>
+            <th>Precio Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for reserva in reservas %}
+        <tr>
+            <td>{{ reserva.reserva_id }}</td>
+            <td>{{ reserva.reserva_usuario }}</td>
+            <td>{{ reserva.reserva_servicios }}</td>
+            <td>{{ reserva.reserva_promos }}</td>
+            <td>${{ reserva.reserva_precioTotal }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+

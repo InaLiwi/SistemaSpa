@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block titulo %}Crear Servicio{% endblock %}
+
+{% block contenido %}
+<h1>Crear Nuevo Servicio</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Guardar</button>
+</form>
+{% endblock %}
+

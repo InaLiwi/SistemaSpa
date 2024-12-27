@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block titulo %} Servicios - Trabajadores {% endblock %}
+
+{% block contenido %} 
+<div class="card-header">
+    <br><a name="" id="" class="btn btn-success" href="{% url 'c_servicio' %}" role="button">Nuevo Servicio</a>
+</div>
+{% for servicio in servicios %}
+<div class="row offset-md">
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+        <div class="card border-0" id="tarjetas">
+            <div class="card-body">
+                <img src="{{ servicio.servicio_imagenes.url }}" class="card-img-top" style="width:100px;" alt="...">
+                <h5 class="card-title"> ID Servicio: {{ servicio.servicio_id }} </h5>
+                <h5 class="card-title">Precio: ${{ servicio.servicio_precio }}</h5>
+                <h6 class="card-title">Descripción: {{ servicio.servicio_descripcion }}</h6>
+                <h5 class="card-title">Bloque horario: {{ servicio.servicio_bh }} hrs</h5>
+                <a href="{% url 'u_servicio' servicio.servicio_id %}" class="btn btn-primary">Editar</a>
+                <a href="{% url 'd_servicio' servicio.servicio_id %}" class="btn btn-danger">Eliminar</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
+

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Mis Reservas - Spa Relax{% endblock %}
+
+{% block hero %}
+<section class="hero-section text-center py-5">
+    <div class="container">
+        <h1 class="display-4">Mis Reservas</h1>
+        <p class="lead">Gestiona tus citas y tratamientos programados</p>
+    </div>
+</section>
+{% endblock %}
+
+{% block content %}
+<section class="my-reservations py-5">
+    <div class="row">
+        {% for reserva in reservas %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ reserva.servicio.nombre }}</h5>
+                        <p class="card-text"><strong>Fecha:</strong> {{ reserva.fecha|date:"d/m/Y H:i" }}</p>
+                        <p class="card-text"><strong>Estado:</strong> {{ reserva.get_estado_display }}</p>
+                        {% if reserva.promocion %}
+                            <p class="card-text"><strong>Promoción aplicada:</strong> {{ reserva.promocion.nombre }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="card-footer bg-white border-top-0">
+                        {% if reserva.estado == 'pendiente' %}
+                            <a href="{% url 'cancelar_reserva' reserva.id %}" class="btn btn-danger">Cancelar Reserva</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12">
+                <p class="text-center">No tienes reservas actualmente.</p>
+                <div class="text-center mt-3">
+                    <a href="{% url 'servicios' %}" class="btn btn-primary">Explorar Servicios</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
+

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block titulo %}Gestión de Servicios{% endblock %}
+
+{% block contenido %}
+<h1>Gestión de Servicios</h1>
+<a href="{% url 'crear_servicio' %}" class="btn btn-primary">Crear Nuevo Servicio</a>
+<table class="table mt-3">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Descripción</th>
+            <th>Precio</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for servicio in servicios %}
+        <tr>
+            <td>{{ servicio.servicio_id }}</td>
+            <td>{{ servicio.servicio_descripcion }}</td>
+            <td>${{ servicio.servicio_precio }}</td>
+            <td>
+                <a href="{% url 'editar_servicio' servicio.servicio_id %}" class="btn btn-sm btn-warning">Editar</a>
+                <a href="{% url 'eliminar_servicio' servicio.servicio_id %}" class="btn btn-sm btn-danger">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+

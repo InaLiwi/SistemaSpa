@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Hacer Reserva - Spa Relax{% endblock %}
+
+{% block hero %}
+<section class="hero-section text-white text-center py-5">
+    <div class="container">
+        <h1 class="display-4">Reserva tu Experiencia</h1>
+        <p class="lead">Elige el día y la hora para tu tratamiento de spa</p>
+    </div>
+</section>
+{% endblock %}
+
+{% block content %}
+<section class="reservation-form py-5">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>{{ servicio.nombre }}</h2>
+            <p>{{ servicio.descripcion }}</p>
+            <p><strong>Precio:</strong> ${{ servicio.precio }}</p>
+            <p><strong>Duración:</strong> {{ servicio.duracion }}</p>
+            {% if servicio.imagen %}
+                <img src="{{ servicio.imagen.url }}" alt="{{ servicio.nombre }}" class="img-fluid rounded mb-3">
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            <form method="post" class="card shadow-sm">
+                <div class="card-body">
+                    <h3 class="card-title">Formulario de Reserva</h3>
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="mb-3">
+                            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.help_text %}
+                                <small class="form-text text-muted">{{ field.help_text }}</small>
+                            {% endif %}
+                            {% for error in field.errors %}
+                                <div class="invalid-feedback d-block">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-primary">Confirmar reserva</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
